@@ -64,6 +64,7 @@ public class SpriteView extends Sprite {
     }
     
     protected void setSpeed(int angle) {
+        System.out.println(particle.getName() + " :" + particle.getPosition());
         setHorizontalSpeed(particle.speed() * Math.cos(GameMath.degreesToRadians(particle.getAngle())));
         setVerticalSpeed(particle.speed() * Math.sin(GameMath.degreesToRadians(particle.getAngle())));
     }

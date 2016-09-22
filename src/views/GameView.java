@@ -7,10 +7,7 @@ package views;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.PlayField;
-import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.TileBackground;
-import events.ParticleListener;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -51,20 +48,23 @@ public class GameView extends Game {
         bg = new TileBackground(getImages("img/background.png", 1, 1), tiles);
         bg.setClip(0, 0, this.dimensions().width, this.dimensions().height);
 
-        Players.get(0).getGroup().setBackground(bg);
+        field.setBackground(bg);
+        
+        field.addCollisionGroup(
+                AIPlayers.get(0).getGroup(), 
+                Players.get(0).getGroup(),
+                new Collision());
     }
 
     @Override
     public void update(long l) {
         game.updateGame(mousePosition());
-        //spriteGroup.update(l);
         bg.update(l);
         field.update(l);
     }
 
     @Override
     public void render(Graphics2D g) {
-        //spriteGroup.render(g);
         bg.render(g);
         field.render(g);
         if (Players.get(0) != null) {

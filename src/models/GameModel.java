@@ -40,8 +40,8 @@ public class GameModel {
     public GameModel(int maxWidth, int maxHeight) {
         createPlayer(maxWidth, maxHeight);
         createBot(maxWidth, maxHeight);
-        createBot(maxWidth, maxHeight);
-        createBot(maxWidth, maxHeight);
+        //createBot(maxWidth, maxHeight);
+        //createBot(maxWidth, maxHeight);
     }
     
     private void startGame() {
@@ -64,7 +64,7 @@ public class GameModel {
     
     public Particle createBot(int maxWidth, int maxHeight) {
         Particle particle = new Particle(maxWidth, maxHeight);
-        particle.setName("bot_" + AIplayers.size());
+        particle.setName("bot_" + (AIplayers.size() + 1));
         AIplayers.add( particle );
         controllers.add( new AIController(this, particle) );
         return particle; 
