@@ -11,9 +11,15 @@ import events.ParticleListener;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import models.GameMath;
+import models.ImageWork;
 import models.Particle;
 
 /**
@@ -42,29 +48,43 @@ public class SpriteView extends Sprite {
      */
     protected SpriteGroup group = null;
     
+    
     private void repaint() {
-        if (color != null && icon != null) {
+        BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(), BufferedImage.TYPE_INT_ARGB);
+        if (color != null) {
             // Зарисовать площадь нужным цветом
-            BufferedImage bi = new BufferedImage(icon.getWidth(), icon.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
             g2d = bi.createGraphics();
             g2d.setColor(color);
             g2d.fillOval(0, 0, bi.getWidth(), bi.getHeight());
             
             // Обозначить периметр
             g2d.setColor(color.darker().darker());
-            g2d.setStroke(new BasicStroke(2));
-            g2d.drawOval(0, 0, icon.getWidth(), icon.getHeight());
-           
-         
-            g2d.drawImage(icon, 0, 0, null);
+            g2d.setStroke(new BasicStroke((float) (particle.getSize()*0.03)));
+            g2d.drawOval(0, 0, particle.getSize(), particle.getSize());
+            g2d.drawImage(null,0,0, null);
+            if( !particle.getType().isEmpty() ) {
+                /*try {
+                    //Взять картинку и задать ей нужный размер
+                    Image originalImage = ImageIO.read(new File("img/" + particle.getType() + ".png"));
+                    Image scaled = originalImage.getScaledInstance(particle.getSize(), particle.getSize(), Image.SCALE_SMOOTH);
+                    //Создать  BufferedImage
+                    BufferedImage avatar = new BufferedImage(scaled.getWidth(null), scaled.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                    //Нарисовать BufferedImage на кружочке
+                    Graphics2D bGr = avatar.createGraphics();
+                    bGr.drawImage(scaled, 0, 0, null);
+                    bGr.dispose();
+                    g2d.drawImage(avatar, (particle.getSize() - avatar.getWidth()) / 2,
+                         (particle.getSize() - avatar.getHeight()) / 2, null);
+                } catch (IOException ex) {
+                    Logger.getLogger("No such file in the directory");
+                }*/
+            }
             
             this.setImage(bi);
         }
     }
     
     protected void setSpeed(int angle) {
-        System.out.println(particle.getName() + " :" + particle.getPosition());
         setHorizontalSpeed(particle.speed() * Math.cos(GameMath.degreesToRadians(particle.getAngle())));
         setVerticalSpeed(particle.speed() * Math.sin(GameMath.degreesToRadians(particle.getAngle())));
     }

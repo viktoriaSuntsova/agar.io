@@ -26,6 +26,8 @@ public class Particle {
      */
     private String name = "";
     
+    private String type = "";
+    
     /**
      * Цвет объекта
      */
@@ -49,12 +51,14 @@ public class Particle {
     /**
      * размер объекта
      */
-    private int size = 100;
+    private int size = 50;
     
     /**
      * Позиция объекта
      */
     private Point position = null;
+    
+    private Particle collisionParticle = null;
     
     public Particle(int maxWidth, int maxHeight) {
         Random r = new Random();
@@ -87,6 +91,18 @@ public class Particle {
 
     public int getAngle() {
         return angle;
+    }
+    
+    public String getType() {
+        return type;
+    }
+    
+    public void setCollision(Particle p) {
+        collisionParticle = p;
+    }
+    
+    public Particle getCollision() {
+        return collisionParticle;
     }
 
     public void setPosition(int x, int y, int width, int height) {

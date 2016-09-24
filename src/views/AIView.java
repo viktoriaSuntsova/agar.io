@@ -16,10 +16,9 @@ import models.Particle;
  */
 public class AIView extends SpriteView {
 
-    public AIView(Particle _particle, BufferedImage _icon) {
+    public AIView(Particle _particle) {
         particle = _particle;
-        icon = _icon;
-        setSpeed(particle.getAngle());
+        setSpeed(0);//particle.getAngle());
         setColor(Color.RED);
         setPosition(particle.getPosition());
         group = new SpriteGroup(particle.getName());

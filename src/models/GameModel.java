@@ -21,6 +21,7 @@ public class GameModel {
      */
     private ArrayList<Particle> players = new ArrayList<>();
     private ArrayList<Particle> AIplayers = new ArrayList<>();
+    private ArrayList<Particle> sprites = new ArrayList<>();
     
     /**
      * Число ботов
@@ -38,10 +39,13 @@ public class GameModel {
     private final List<Controller> controllers = new ArrayList<>();
     
     public GameModel(int maxWidth, int maxHeight) {
+        for(int i = 0; i < botsCount; i++) {
+            createBot(maxWidth, maxHeight);
+        }
+        for(int i = 0; i < botsCount; i++) {
+            createSprite(maxWidth, maxHeight);
+        }
         createPlayer(maxWidth, maxHeight);
-        createBot(maxWidth, maxHeight);
-        //createBot(maxWidth, maxHeight);
-        //createBot(maxWidth, maxHeight);
     }
     
     private void startGame() {
@@ -70,12 +74,23 @@ public class GameModel {
         return particle; 
     }
     
+    public Particle createSprite(int maxWidth, int maxHeight) {
+        Particle particle = new Particle(maxWidth, maxHeight);
+        particle.setName("bot_" + (AIplayers.size() + 1));
+        sprites.add( particle );
+        return particle; 
+    }
+    
     public ArrayList<Particle> getBots() {
         return AIplayers;
     }
     
     public ArrayList<Particle> getPlayers() {
         return players;
+    }
+    
+    public ArrayList<Particle> getSprites() {
+        return sprites;
     }
     
 }

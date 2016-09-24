@@ -49,11 +49,6 @@ public class GameView extends Game {
         bg.setClip(0, 0, this.dimensions().width, this.dimensions().height);
 
         field.setBackground(bg);
-        
-        field.addCollisionGroup(
-                AIPlayers.get(0).getGroup(), 
-                Players.get(0).getGroup(),
-                new Collision());
     }
 
     @Override
@@ -85,15 +80,24 @@ public class GameView extends Game {
     
     private void loadBots() {
         for( Particle particle : game.getBots() ) {
-            AIView ai = new AIView( particle, getImage("img/agar1.png") );
+            AIView ai = new AIView( particle );
             field.addGroup(ai.getGroup());
+            field.addCollisionGroup( ai.getGroup(), Players.get(0).getGroup(), new Collision());
             AIPlayers.add(ai);
         }
     }
     
     private void loadPlayers() {
         for( Particle particle : game.getPlayers()) {
-            PlayerView player = new PlayerView( particle, getImage("img/agar.png") );
+            PlayerView player = new PlayerView( particle );
+            field.addGroup(player.getGroup());
+            Players.add(player );
+        }
+    }
+    
+    private void loadSprites() {
+        for( Particle particle : game.getPlayers()) {
+            PlayerView player = new PlayerView( particle );
             field.addGroup(player.getGroup());
             Players.add(player );
         }

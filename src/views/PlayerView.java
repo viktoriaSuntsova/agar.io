@@ -16,9 +16,13 @@ import models.Particle;
  */
 public class PlayerView extends SpriteView {
     
-    public PlayerView(Particle _particle, BufferedImage _icon) {
+    /**
+     *
+     * @param _particle
+     */
+    public PlayerView(Particle _particle) {
+        super();
         particle = _particle;
-        icon = _icon;
         setSpeed(particle.getAngle());
         setColor(Color.GREEN);
         setPosition(particle.getPosition());

@@ -78,4 +78,19 @@ public class GameMath {
         int newY = p.y - 2 * (p.y - center.y);
         return new Point(newX, newY);
     }
+    
+    public static double getAngleAtThreePoints(Point A, Point B, Point C) {
+        double ab = GameMath.distance(A, B),
+                bc = GameMath.distance(B, C),
+                ac = GameMath.distance(A, C);
+        double cos = Math.acos( (Math.pow(ac, 2) + Math.pow(ab, 2) - Math.pow(bc, 2)) / (2*ac*ab));
+        return cos;
+    }
+    
+    public static int pointToLine(Point A, Point B, Point O) {
+        double k = (A.getY() - B.getY()) / (A.getX() - B.getX()),
+                b = (B.getX() * A.getY() - A.getX()*B.getY())/(B.getX() - A.getX());
+        int res = O.getY() < k*O.getX() + b ? 1 : -1;
+        return B.getX() > A.getX() ? res : -res;
+    }
 }

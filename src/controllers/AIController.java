@@ -28,7 +28,7 @@ public class AIController extends Controller {
     public void update(Point mousePosition) {
         int angle = GameMath.angle(particle.getPosition(), mousePosition);
         particle.setAngle(angle);
-        particle.setSpeed(0.01);
+        particle.setSpeed(0);
         particle.fireCharacteristicsIsChanged();
     }
     

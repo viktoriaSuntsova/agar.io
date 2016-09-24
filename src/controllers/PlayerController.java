@@ -9,6 +9,7 @@ import java.awt.Point;
 import models.GameMath;
 import models.GameModel;
 import models.Particle;
+import views.Collision;
 
 /**
  *
@@ -31,22 +32,40 @@ public class PlayerController extends Controller {
      */
     @Override
     public void update(Point mousePosition) {
+        //радиус частицы
         int radiusParticle = particle.getSize()/2;
-        
-        double dx = Math.abs(particle.getPosition().getX() - mousePosition.getX()),
-                dy = Math.abs(particle.getPosition().getY() - mousePosition.getY());
-        
-        double r = Math.sqrt( Math.pow(dx, 2) + Math.pow(dy, 2));
+        // растояние между центром частицы и мышкой
+        double r = GameMath.distance(particle.getPosition(), mousePosition);
+        // угол относительно горизонта
         int angle = GameMath.angle(particle.getPosition(), mousePosition);
         particle.setAngle(angle);
-        if( r < radiusParticle*0.1 ) {
+        if( r < radiusParticle*0.2 ) {
             particle.setSpeed(0);
-        } else if( r > radiusParticle*0.1 && r < radiusParticle ) {
+        } else if( r > radiusParticle*0.2 && r < radiusParticle ) {
             particle.setSpeed(0.05);
         } else {
             particle.setSpeed(0.1);
         }
+        if( particle.getCollision() != null ) {
+            
+            setCollision(angle, mousePosition);
+            particle.setCollision(null);
+        }
         particle.fireCharacteristicsIsChanged();
+    }
+    
+    public void setCollision(int angle, Point mousePosition) {
+        double angleCollision = GameMath.radiansToDegrees( GameMath.getAngleAtThreePoints(
+                    particle.getPosition(), 
+                    particle.getCollision().getPosition(), 
+                    mousePosition.getLocation()
+            ) );
+        if( angleCollision >= 0 && angleCollision < 90 ) {
+            int diffAngle = (int) (90 - angleCollision);
+            int pointToLine = GameMath.pointToLine(particle.getPosition(), particle.getCollision().getPosition(), mousePosition);
+            particle.setAngle(pointToLine > 0 ? angle - diffAngle : angle + diffAngle);
+            particle.setSpeed(particle.speed() * (angleCollision / 90 ));
+        }
     }
     
 }
