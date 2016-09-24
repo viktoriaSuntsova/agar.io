@@ -35,23 +35,34 @@ public class PlayerController extends Controller {
         //радиус частицы
         int radiusParticle = particle.getSize()/2;
         // растояние между центром частицы и мышкой
-        double r = GameMath.distance(particle.getPosition(), mousePosition);
+        double distance = GameMath.distance(particle.getPosition(), mousePosition);
         // угол относительно горизонта
         int angle = GameMath.angle(particle.getPosition(), mousePosition);
         particle.setAngle(angle);
-        if( r < radiusParticle*0.2 ) {
+        setSpeed(distance, radiusParticle);
+        if( particle.getCollision() != null ) {
+            int dSize = particle.getSize() - particle.getCollision().getSize();
+            double distanceBetweenSprites = GameMath.distance(particle.getPosition(), particle.getCollision().getPosition());
+            // если этот спрайт больше и он достиг центра другой частицы
+            if( dSize > 10 ) {
+                if( distanceBetweenSprites - radiusParticle < 5 )
+                    particle.swallow();
+            } else if( dSize < 10 || dSize > -10 ) {
+                setCollision(angle, mousePosition);
+            }
+            particle.setCollision(null);
+        }
+        particle.fireCharacteristicsIsChanged();
+    }
+    
+    private void setSpeed(double distance, int radiusParticle) {
+        if( distance < radiusParticle*0.2 ) {
             particle.setSpeed(0);
-        } else if( r > radiusParticle*0.2 && r < radiusParticle ) {
+        } else if( distance > radiusParticle*0.2 && distance < radiusParticle ) {
             particle.setSpeed(0.05);
         } else {
             particle.setSpeed(0.1);
         }
-        if( particle.getCollision() != null ) {
-            
-            setCollision(angle, mousePosition);
-            particle.setCollision(null);
-        }
-        particle.fireCharacteristicsIsChanged();
     }
     
     public void setCollision(int angle, Point mousePosition) {

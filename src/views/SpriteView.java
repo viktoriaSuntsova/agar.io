@@ -33,21 +33,11 @@ public class SpriteView extends Sprite {
     
     protected Color color = null;
     
-    /**
-     * Иконка объекта
-     */
     protected BufferedImage icon = null;
     
-    /**
-     * Графика для отрисовки
-     */
     private Graphics2D g2d;
     
-    /**
-     * Группа объектов, участвующих в коллизиях
-     */
     protected SpriteGroup group = null;
-    
     
     private void repaint() {
         BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(), BufferedImage.TYPE_INT_ARGB);
@@ -57,13 +47,8 @@ public class SpriteView extends Sprite {
             g2d.setColor(color);
             g2d.fillOval(0, 0, bi.getWidth(), bi.getHeight());
             
-            // Обозначить периметр
-            g2d.setColor(color.darker().darker());
-            g2d.setStroke(new BasicStroke((float) (particle.getSize()*0.03)));
-            g2d.drawOval(0, 0, particle.getSize(), particle.getSize());
-            g2d.drawImage(null,0,0, null);
             if( !particle.getType().isEmpty() ) {
-                /*try {
+                try {
                     //Взять картинку и задать ей нужный размер
                     Image originalImage = ImageIO.read(new File("img/" + particle.getType() + ".png"));
                     Image scaled = originalImage.getScaledInstance(particle.getSize(), particle.getSize(), Image.SCALE_SMOOTH);
@@ -77,7 +62,7 @@ public class SpriteView extends Sprite {
                          (particle.getSize() - avatar.getHeight()) / 2, null);
                 } catch (IOException ex) {
                     Logger.getLogger("No such file in the directory");
-                }*/
+                }
             }
             
             this.setImage(bi);
@@ -113,6 +98,11 @@ public class SpriteView extends Sprite {
         @Override
         public void CharacteristicsIsChanged(ParticleEvent p) {
             setSpeed( p.getParticle().getAngle());
+        }
+
+        @Override
+        public void ParticleIncreased(ParticleEvent p) {
+            repaint();
         }
     }
     

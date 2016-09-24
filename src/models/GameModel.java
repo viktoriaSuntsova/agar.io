@@ -21,7 +21,7 @@ public class GameModel {
      */
     private ArrayList<Particle> players = new ArrayList<>();
     private ArrayList<Particle> AIplayers = new ArrayList<>();
-    private ArrayList<Particle> sprites = new ArrayList<>();
+    private ArrayList<Particle> agars = new ArrayList<>();
     
     /**
      * Число ботов
@@ -31,7 +31,7 @@ public class GameModel {
     /**
      * Число ботов
      */
-    private final int spriteCount = 10;
+    private final int agarCount = 100;
     
     /**
      * Массив контроллеров для игроков и ботов
@@ -42,8 +42,8 @@ public class GameModel {
         for(int i = 0; i < botsCount; i++) {
             createBot(maxWidth, maxHeight);
         }
-        for(int i = 0; i < botsCount; i++) {
-            createSprite(maxWidth, maxHeight);
+        for(int i = 0; i < agarCount; i++) {
+            createAgar(maxWidth, maxHeight);
         }
         createPlayer(maxWidth, maxHeight);
     }
@@ -74,10 +74,10 @@ public class GameModel {
         return particle; 
     }
     
-    public Particle createSprite(int maxWidth, int maxHeight) {
+    public Particle createAgar(int maxWidth, int maxHeight) {
         Particle particle = new Particle(maxWidth, maxHeight);
-        particle.setName("bot_" + (AIplayers.size() + 1));
-        sprites.add( particle );
+        particle.setName("bot_" + (agars.size() + 1));
+        agars.add( particle );
         return particle; 
     }
     
@@ -89,8 +89,8 @@ public class GameModel {
         return players;
     }
     
-    public ArrayList<Particle> getSprites() {
-        return sprites;
+    public ArrayList<Particle> getAgars() {
+        return agars;
     }
     
 }

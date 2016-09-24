@@ -5,8 +5,7 @@
  */
 package models;
 
-import events.ParticleEvent;
-import events.ParticleListener;
+import events.*;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -108,12 +107,6 @@ public class Particle {
     public void setPosition(int x, int y, int width, int height) {
         position = new Point( x + width/2, y + height/2 );
     }
-    
-    private ArrayList particleListenerList = new ArrayList();
-
-    public void addPlayerActionListener(ParticleListener p) {
-        particleListenerList.add(p);
-    }
 
     public double speed() {
         return speed;
@@ -123,10 +116,46 @@ public class Particle {
         speed = _speed;
     }
     
+    public void swallow() {
+        if( collisionParticle != null ) {
+            int otherSize = collisionParticle.getSize();
+            double allSquare = 3.14*Math.pow(size, 2) + 3.14*Math.pow(otherSize, 2);
+            int newSize = (int)(Math.sqrt(allSquare/3.14)+0.99);
+            setSize(newSize);
+            fireParticleIsIncrease();
+            collisionParticle.fireParticleDied();
+        }
+    }
+    
+    private ArrayList particleListenerList = new ArrayList();
+    private GameListener gameListener = null;
+
+    public void addPlayerActionListener(ParticleListener p) {
+        particleListenerList.add(p);
+    }
+    
+    public void setGameListener( GameListener g ) {
+        gameListener = g;
+    }
+    
     public void fireCharacteristicsIsChanged() {
         ParticleEvent e = new ParticleEvent(this);
         for (Object listener : particleListenerList){
             ((ParticleListener)listener).CharacteristicsIsChanged(e);
         }
+    }
+    
+    public void fireParticleIsIncrease() {
+        ParticleEvent e = new ParticleEvent(this);
+        for (Object listener : particleListenerList){
+            ((ParticleListener)listener).ParticleIncreased(e);
+        }
+    }
+    
+    public void fireParticleDied() {
+        GameEvent e = new GameEvent();
+        e.setParticle(this);
+        if( gameListener != null )
+            gameListener.ParticleDied(e);
     }
 }

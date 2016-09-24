@@ -11,10 +11,8 @@ import java.util.EventListener;
  *
  * @author 999
  */
-public interface ParticleListener extends EventListener {
+public interface GameListener extends EventListener {
     
-    public void CharacteristicsIsChanged(ParticleEvent p);
-    
-    public void ParticleIncreased(ParticleEvent p);
+    public void ParticleDied(GameEvent e);
     
 }

@@ -7,7 +7,9 @@ package views;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.PlayField;
+import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.TileBackground;
+import events.*;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -21,8 +23,8 @@ import models.Particle;
  */
 public class GameView extends Game {
     
-    private final int WIDTH = 1000;
-    private final int HEIGHT = 1000;
+    private final int WIDTH = 800;
+    private final int HEIGHT = 600;
     
     private int[][] tiles = new int[WIDTH][HEIGHT];
     
@@ -36,14 +38,14 @@ public class GameView extends Game {
     
     private GameModel game = new GameModel(WIDTH, HEIGHT);
     
-    ArrayList<PlayerView> Players = new ArrayList<>();
-    ArrayList<AIView> AIPlayers = new ArrayList<>();
+    ArrayList<SpriteView> Sprites = new ArrayList<>();
 
     @Override
     public void initResources() {
         
-        loadPlayers();
+        loadAgars();
         loadBots();
+        loadPlayers();
 
         bg = new TileBackground(getImages("img/background.png", 1, 1), tiles);
         bg.setClip(0, 0, this.dimensions().width, this.dimensions().height);
@@ -62,8 +64,8 @@ public class GameView extends Game {
     public void render(Graphics2D g) {
         bg.render(g);
         field.render(g);
-        if (Players.get(0) != null) {
-            bg.setToCenter(Players.get(0));
+        if (Sprites.get(0) != null) {
+            bg.setToCenter(field.getGroup("ivan").getActiveSprite());
         }
     }
     
@@ -81,25 +83,36 @@ public class GameView extends Game {
     private void loadBots() {
         for( Particle particle : game.getBots() ) {
             AIView ai = new AIView( particle );
+            ai.particle.setGameListener(new GameObserver());
             field.addGroup(ai.getGroup());
-            field.addCollisionGroup( ai.getGroup(), Players.get(0).getGroup(), new Collision());
-            AIPlayers.add(ai);
+            for(SpriteView sprite : Sprites ) {
+                field.addCollisionGroup( ai.getGroup(), sprite.getGroup(), new Collision());
+            }
+            Sprites.add(ai);
         }
     }
     
     private void loadPlayers() {
         for( Particle particle : game.getPlayers()) {
             PlayerView player = new PlayerView( particle );
+            player.particle.setGameListener(new GameObserver());
             field.addGroup(player.getGroup());
-            Players.add(player );
+            for(SpriteView sprite : Sprites ) {
+                field.addCollisionGroup( player.getGroup(), sprite.getGroup(), new Collision());
+            }
+            Sprites.add(player );
         }
     }
     
-    private void loadSprites() {
-        for( Particle particle : game.getPlayers()) {
-            PlayerView player = new PlayerView( particle );
-            field.addGroup(player.getGroup());
-            Players.add(player );
+    private void loadAgars() {
+        for( Particle particle : game.getAgars()) {
+            AgarView agar = new AgarView( particle );
+            agar.particle.setGameListener(new GameObserver());
+            field.addGroup(agar.getGroup());
+            for(SpriteView sprite : Sprites ) {
+                field.addCollisionGroup( agar.getGroup(), sprite.getGroup(), new Collision());
+            }
+            Sprites.add( agar );
         }
     }
     
@@ -109,6 +122,15 @@ public class GameView extends Game {
      */
     public Dimension dimensions() {
         return new Dimension(WIDTH, HEIGHT);
+    }
+    
+    protected class GameObserver implements GameListener{
+
+        @Override
+        public void ParticleDied(GameEvent e) {
+            SpriteGroup group = field.getGroup(e.getParticle().getName());
+            field.removeGroup(group);
+        }
     }
     
 }

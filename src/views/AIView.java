@@ -16,6 +16,10 @@ import models.Particle;
  */
 public class AIView extends SpriteView {
 
+    /**
+     *
+     * @param _particle
+     */
     public AIView(Particle _particle) {
         particle = _particle;
         setSpeed(0);//particle.getAngle());

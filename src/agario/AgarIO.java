@@ -6,8 +6,10 @@
 package agario;
 
 import com.golden.gamedev.GameLoader;
+import com.golden.gamedev.funbox.GameSettings;
 import java.awt.Dimension;
 import views.GameView;
+import views.SettingsView;
 
 /**
  *
@@ -19,8 +21,9 @@ public class AgarIO {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //new SettingsView();
         GameLoader game = new GameLoader();
-        game.setup(new GameView(), new Dimension(800,640), false);//Инициализация графического движка
+        game.setup(new GameView(), new Dimension(800,600), true);//Инициализация графического движка
         game.start();
     }
     

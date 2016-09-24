@@ -7,27 +7,25 @@ package views;
 
 import com.golden.gamedev.object.SpriteGroup;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
+import java.util.Random;
 import models.Particle;
 
-/** Здесь будет
+/**
  *
  * @author 999
  */
-public class PlayerView extends SpriteView {
+public class AgarView extends SpriteView {
     
-    /**
-     *
-     * @param _particle
-     */
-    public PlayerView(Particle _particle) {
+    public AgarView(Particle _particle) {
+        Random r = new Random();
         particle = _particle;
-        setSpeed(particle.getAngle());
-        setColor(Color.GREEN);
+        particle.setSize(r.nextInt(10) + 10);
+        setSpeed(0);
+        setColor(Color.BLUE);
         setPosition(particle.getPosition());
         group = new SpriteGroup(particle.getName());
         group.add(this);
-        particle.addPlayerActionListener(new ParticleObserver());
+        particle.addPlayerActionListener(new SpriteView.ParticleObserver());
     }
     
 }

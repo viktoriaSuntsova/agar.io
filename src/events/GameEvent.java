@@ -5,16 +5,21 @@
  */
 package events;
 
-import java.util.EventListener;
+import models.Particle;
 
 /**
  *
  * @author 999
  */
-public interface ParticleListener extends EventListener {
+public class GameEvent {
     
-    public void CharacteristicsIsChanged(ParticleEvent p);
+    Particle particle = null;
     
-    public void ParticleIncreased(ParticleEvent p);
+    public void setParticle(Particle p) {
+        particle = p;
+    }
     
+    public Particle getParticle() {
+        return particle;
+    }
 }
