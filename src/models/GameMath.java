@@ -40,7 +40,21 @@ public class GameMath {
      * @return 
      */
     public static double distance(int x1, int y1, int x2, int y2) {
-        return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+        int deltaX = 0;
+        int deltaY = 0;
+        if(x1>x2){
+            deltaX = x1-x2;
+        }
+        else{
+             deltaX = x2-x1;
+        }
+        if(y1>y2){
+            deltaY = y1-y2;
+        }
+        else{
+             deltaY = y2-y1;
+        }
+        return Math.sqrt( deltaX*deltaX + deltaY*deltaY);
     }
     
     /**
@@ -92,5 +106,9 @@ public class GameMath {
                 b = (B.getX() * A.getY() - A.getX()*B.getY())/(B.getX() - A.getX());
         int res = O.getY() < k*O.getX() + b ? 1 : -1;
         return B.getX() > A.getX() ? res : -res;
+    }
+
+    public static boolean distance(double distance) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

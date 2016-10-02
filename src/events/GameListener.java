@@ -13,6 +13,8 @@ import java.util.EventListener;
  */
 public interface GameListener extends EventListener {
     
+    
     public void ParticleDied(GameEvent e);
+    
     
 }

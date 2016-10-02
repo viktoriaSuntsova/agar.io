@@ -43,9 +43,10 @@ public class GameView extends Game {
     @Override
     public void initResources() {
         
-        loadAgars();
+        
         loadBots();
         loadPlayers();
+        loadAgars();
 
         bg = new TileBackground(getImages("img/background.png", 1, 1), tiles);
         bg.setClip(0, 0, this.dimensions().width, this.dimensions().height);
@@ -65,7 +66,7 @@ public class GameView extends Game {
         bg.render(g);
         field.render(g);
         if (Sprites.get(0) != null) {
-            bg.setToCenter(field.getGroup("ivan").getActiveSprite());
+            bg.setToCenter(field.getGroup("bot_0").getActiveSprite());
         }
     }
     

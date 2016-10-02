@@ -80,6 +80,8 @@ public class Particle {
         return size;
     }
 
+    
+    
     public void setSize(int _size) {
         size = _size;
     }
@@ -94,6 +96,10 @@ public class Particle {
     
     public String getType() {
         return type;
+    }
+    
+    public void setType(String str) {
+        type = str;
     }
     
     public void setCollision(Particle p) {
@@ -153,9 +159,11 @@ public class Particle {
     }
     
     public void fireParticleDied() {
+        
         GameEvent e = new GameEvent();
         e.setParticle(this);
         if( gameListener != null )
             gameListener.ParticleDied(e);
+            
     }
 }
