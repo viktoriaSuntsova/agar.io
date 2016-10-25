@@ -10,9 +10,6 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Random;
-import javafx.util.Pair;
-import views.SpriteView;
 
 /**
  *
@@ -57,11 +54,15 @@ public class Particle {
      */
     private Point position = null;
     
-    private Particle collisionParticle = null;
+    public Particle(Point p) {
+        position = p;
+    }
     
-    public Particle(int maxWidth, int maxHeight) {
-        Random r = new Random();
-        position = new Point(r.nextInt(maxWidth), r.nextInt(maxHeight));
+    public Particle(Point p, String _type, String _name) {
+        type = _type;
+        position = p;
+        if( _name != null && !_name.isEmpty())
+            name = _name;
     }
 
     public Point getPosition() {
@@ -96,14 +97,6 @@ public class Particle {
         return type;
     }
     
-    public void setCollision(Particle p) {
-        collisionParticle = p;
-    }
-    
-    public Particle getCollision() {
-        return collisionParticle;
-    }
-
     public void setPosition(int x, int y, int width, int height) {
         position = new Point( x + width/2, y + height/2 );
     }
@@ -116,15 +109,13 @@ public class Particle {
         speed = _speed;
     }
     
-    public void swallow() {
-        if( collisionParticle != null ) {
-            int otherSize = collisionParticle.getSize();
-            double allSquare = 3.14*Math.pow(size, 2) + 3.14*Math.pow(otherSize, 2);
-            int newSize = (int)(Math.sqrt(allSquare/3.14)+0.99);
-            setSize(newSize);
-            fireParticleIsIncrease();
-            collisionParticle.fireParticleDied();
-        }
+    public void swallow(Particle p) {
+        int otherSize = p.getSize();
+        double allSquare = 3.14*Math.pow(size, 2) + 3.14*Math.pow(otherSize, 2);
+        int newSize = (int)(Math.sqrt(allSquare/3.14)+0.99);
+        setSize(newSize);
+        fireParticleIsIncrease();
+        p.fireParticleDied();
     }
     
     private ArrayList particleListenerList = new ArrayList();

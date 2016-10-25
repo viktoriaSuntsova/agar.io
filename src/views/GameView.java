@@ -5,6 +5,7 @@
  */
 package views;
 
+import collisions.*;
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.SpriteGroup;
@@ -23,8 +24,8 @@ import models.Particle;
  */
 public class GameView extends Game {
     
-    private final int WIDTH = 800;
-    private final int HEIGHT = 600;
+    private final int WIDTH = 2000;
+    private final int HEIGHT = 1000;
     
     private int[][] tiles = new int[WIDTH][HEIGHT];
     
@@ -43,12 +44,14 @@ public class GameView extends Game {
     @Override
     public void initResources() {
         
+        game.startGame();
+        game.setGameListener(new GameObserver());
         loadAgars();
         loadBots();
         loadPlayers();
 
         bg = new TileBackground(getImages("img/background.png", 1, 1), tiles);
-        bg.setClip(0, 0, this.dimensions().width, this.dimensions().height);
+        //bg.setClip(0, 0, this.dimensions().width, this.dimensions().height);
 
         field.setBackground(bg);
     }
@@ -64,8 +67,9 @@ public class GameView extends Game {
     public void render(Graphics2D g) {
         bg.render(g);
         field.render(g);
-        if (Sprites.get(0) != null) {
-            bg.setToCenter(field.getGroup("ivan").getActiveSprite());
+        if (field.getGroup("ivan") != null) {
+            PlayerView player = (PlayerView) field.getGroup("ivan").getActiveSprite();
+            bg.setToCenter(player);
         }
     }
     
@@ -86,7 +90,11 @@ public class GameView extends Game {
             ai.particle.setGameListener(new GameObserver());
             field.addGroup(ai.getGroup());
             for(SpriteView sprite : Sprites ) {
-                field.addCollisionGroup( ai.getGroup(), sprite.getGroup(), new Collision());
+                field.addCollisionGroup(
+                        ai.getGroup(),
+                        sprite.getGroup(),
+                        CollisionFactory.createCollision(((SpriteView)sprite).getParticle().getType())
+                );
             }
             Sprites.add(ai);
         }
@@ -98,7 +106,7 @@ public class GameView extends Game {
             player.particle.setGameListener(new GameObserver());
             field.addGroup(player.getGroup());
             for(SpriteView sprite : Sprites ) {
-                field.addCollisionGroup( player.getGroup(), sprite.getGroup(), new Collision());
+                field.addCollisionGroup( player.getGroup(), sprite.getGroup(), new AgarCollision());
             }
             Sprites.add(player );
         }
@@ -109,10 +117,7 @@ public class GameView extends Game {
             AgarView agar = new AgarView( particle );
             agar.particle.setGameListener(new GameObserver());
             field.addGroup(agar.getGroup());
-            for(SpriteView sprite : Sprites ) {
-                field.addCollisionGroup( agar.getGroup(), sprite.getGroup(), new Collision());
-            }
-            Sprites.add( agar );
+            Sprites.add(0, agar);
         }
     }
     
@@ -130,7 +135,28 @@ public class GameView extends Game {
         public void ParticleDied(GameEvent e) {
             SpriteGroup group = field.getGroup(e.getParticle().getName());
             field.removeGroup(group);
+            game.removeParticle(e.getParticle());
+        }
+
+        @Override
+        public void generatedAgar(GameEvent e) {
+            AgarView agar = new AgarView( e.getParticle() );
+            agar.particle.setGameListener(new GameObserver());
+            field.addGroup(agar.getGroup());
+            for(SpriteView sprite : Sprites ) {
+                field.addCollisionGroup( sprite.getGroup(), agar.getGroup(), new AgarCollision());
+            }
+            Sprites.add(0, agar);
+        }
+
+        @Override
+        public void generatedBot(GameEvent e) {
+            System.out.println("generate agar");
+        }
+
+        @Override
+        public void generatedPlayer(GameEvent e) {
+            System.out.println("generate agar");
         }
     }
-    
 }

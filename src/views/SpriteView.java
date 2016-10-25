@@ -78,6 +78,10 @@ public class SpriteView extends Sprite {
         return group;
     }
     
+    public Particle getParticle() {
+        return particle;
+    }
+    
     public void setColor(Color color) {
         this.color = color;
         repaint();

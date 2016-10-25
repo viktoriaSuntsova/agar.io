@@ -3,8 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/999/Documents/NetBeansProjects/agarIO/src/views/Collision.java</file>
-            <file>file:/C:/Users/999/Documents/NetBeansProjects/agarIO/src/views/GameView.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/views/GameView.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/collisions/AgarCollision.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/views/AgarView.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/collisions/BotBotCollision.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/controllers/AIController.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/collisions/ObstacleCollision.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/events/GameListener.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/views/ObstacleView.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/models/GameModel.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/views/SpriteView.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/views/AIView.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/models/Particle.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/collisions/PlayerBotCollision.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/collisions/CollisionFactory.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/controllers/PlayerController.java</file>
+            <file>file:/C:/Users/999/Documents/NetBeansProjects/agar.io/src/controllers/Controller.java</file>
         </group>
     </open-files>
 </project-private>
