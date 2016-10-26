@@ -7,6 +7,7 @@ package controllers;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import models.GameMath;
 import models.GameModel;
@@ -36,7 +37,7 @@ public class AIController extends Controller {
                 particle.setAngle(angle);
                 particle.fireCharacteristicsIsChanged();
                 angleForStep = angle;
-                stepCount = 500;
+                stepCount = (int)(200 + Math.random()*(300));
                 return;
             }
             //найдем самую близкую к нам бактерию больше нас
@@ -70,9 +71,7 @@ public class AIController extends Controller {
             if("random".equals(particleStr)){
                 //Двигаемся рандомно TODO
                 Random r = new Random();
-                angleForStep = r.nextInt(360);
-                stepCount = 500;
-                System.out.print("random");
+                angle = r.nextInt(360);
             }
             //Сообщаем частице выбранный угол
             particle.setAngle(angle);
@@ -80,6 +79,9 @@ public class AIController extends Controller {
             particle.setSpeed(3.0/particle.getSize());
 
             particle.fireCharacteristicsIsChanged();
+            angleForStep = angle;
+            stepCount = (int)(50 + Math.random()*(500));
+            System.out.print("STEPS" + stepCount);
         }
         else{
              stepCount--;
@@ -196,7 +198,8 @@ public class AIController extends Controller {
         Particle nearestP = null;
         for(Particle p : agars){
             distToP = GameMath.distance(p.getPosition(), particle.getPosition());
-            if(distToP < MIN_DITANCE && (nearestP == null || nearestP.getSize() < p.getSize())){
+           // && (nearestP == null || nearestP.getSize() < p.getSize())
+            if(distToP < MIN_DITANCE ){
                 nearestP = p;
             }
         }
@@ -214,20 +217,24 @@ public class AIController extends Controller {
         double x = particle.getPosition().getX(),
                 y = particle.getPosition().getY();
         if(x > game.getSize().getWidth() ){ 
-            System.out.print("Change angle 180\n");
-            return 180;
+            return (int)(100 + Math.random()*(160));
+            //return 180;
         }
         else if(y > game.getSize().getHeight()){
-            System.out.print("Change angle 90\n");
-            return 270;
+            return (int)(190 + Math.random()*(160));
+            //return 270;
         }
         else if(x < 0){
-            System.out.print("Change angle 0\n");
-            return 0;
+            ArrayList<Integer> n = new ArrayList<Integer>();
+            n.add((int)(1 + Math.random()*(80)));
+            n.add((int)(280 + Math.random()*(80)));
+            int i = (int)(Math.random());
+            return n.get(i);
+            //return 0;
         }
         else if(y < 0){
-            System.out.print("Change angle 270\n");
-            return 90;
+            return (int)(10 + Math.random()*(160));
+            //return 90;
         }
         return -1;
     }
