@@ -9,7 +9,7 @@ import java.awt.Point;
 import models.GameMath;
 import models.GameModel;
 import models.Particle;
-import views.Collision;
+import collisions.*;
 
 /**
  *
@@ -32,6 +32,11 @@ public class PlayerController extends Controller {
      */
     @Override
     public void update(Point mousePosition) {
+        if ( !checkGoOutBorder(mousePosition) ) {
+            particle.setSpeed(0);
+            particle.fireCharacteristicsIsChanged();
+            return;
+        }
         //радиус частицы
         int radiusParticle = particle.getSize()/2;
         // растояние между центром частицы и мышкой
@@ -40,18 +45,6 @@ public class PlayerController extends Controller {
         int angle = GameMath.angle(particle.getPosition(), mousePosition);
         particle.setAngle(angle);
         setSpeed(distance, radiusParticle);
-        if( particle.getCollision() != null ) {
-            int dSize = particle.getSize() - particle.getCollision().getSize();
-            double distanceBetweenSprites = GameMath.distance(particle.getPosition(), particle.getCollision().getPosition());
-            // если этот спрайт больше и он достиг центра другой частицы
-            if( dSize > 10 ) {
-                if( distanceBetweenSprites - radiusParticle < 5 )
-                    particle.swallow();
-            } else if( dSize < 10 || dSize > -10 ) {
-                setCollision(angle, mousePosition);
-            }
-            particle.setCollision(null);
-        }
         particle.fireCharacteristicsIsChanged();
     }
     
@@ -61,22 +54,19 @@ public class PlayerController extends Controller {
         } else if( distance > radiusParticle*0.2 && distance < radiusParticle ) {
             particle.setSpeed(0.05);
         } else {
-            particle.setSpeed(0.1);
+            particle.setSpeed(12.0/particle.getSize());
         }
     }
     
-    public void setCollision(int angle, Point mousePosition) {
-        double angleCollision = GameMath.radiansToDegrees( GameMath.getAngleAtThreePoints(
-                    particle.getPosition(), 
-                    particle.getCollision().getPosition(), 
-                    mousePosition.getLocation()
-            ) );
-        if( angleCollision >= 0 && angleCollision < 90 ) {
-            int diffAngle = (int) (90 - angleCollision);
-            int pointToLine = GameMath.pointToLine(particle.getPosition(), particle.getCollision().getPosition(), mousePosition);
-            particle.setAngle(pointToLine > 0 ? angle - diffAngle : angle + diffAngle);
-            particle.setSpeed(particle.speed() * (angleCollision / 90 ));
+    @Override
+    public boolean checkGoOutBorder(Point mousePosition) {
+        double x = particle.getPosition().getX(),
+                y = particle.getPosition().getY();
+        if(x > game.getSize().getWidth() && mousePosition.getX() > x 
+                || y > game.getSize().getHeight() && mousePosition.getY() > y) {
+            particle.setSpeed(0);
+            return false;
         }
+        return true;
     }
-    
 }
