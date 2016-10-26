@@ -13,16 +13,18 @@ import com.golden.gamedev.object.collision.BasicCollisionGroup;
  */
 public class CollisionFactory {
     
-    public static BasicCollisionGroup createCollision (String type) {
+    /**
+     */
+    public static BasicCollisionGroup createCollision (String first, String second) {
         BasicCollisionGroup collision = null;
-        switch(type) {
+        switch(second) {
             case "bot":
-                collision = new PlayerBotCollision();
+                collision = first.equals("bot") ? new BotBotCollision(): new PlayerBotCollision();
             break;
             case "agar":
                 collision = new AgarCollision();
             break;
-            case "obctacle":
+            case "obstacle":
                 collision = new ObstacleCollision();
             break;
         }

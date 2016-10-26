@@ -48,6 +48,7 @@ public class GameView extends Game {
         game.setGameListener(new GameObserver());
         loadAgars();
         loadBots();
+        loadObstacle();
         loadPlayers();
 
         bg = new TileBackground(getImages("img/background.png", 1, 1), tiles);
@@ -85,7 +86,7 @@ public class GameView extends Game {
     }
     
     private void loadBots() {
-        for( Particle particle : game.getBots() ) {
+        for( Particle particle : game.get("bot") ) {
             AIView ai = new AIView( particle );
             ai.particle.setGameListener(new GameObserver());
             field.addGroup(ai.getGroup());
@@ -93,7 +94,10 @@ public class GameView extends Game {
                 field.addCollisionGroup(
                         ai.getGroup(),
                         sprite.getGroup(),
-                        CollisionFactory.createCollision(((SpriteView)sprite).getParticle().getType())
+                        CollisionFactory.createCollision(
+                                ai.getParticle().getType(),
+                                ((SpriteView)sprite).getParticle().getType()
+                        )
                 );
             }
             Sprites.add(ai);
@@ -101,23 +105,49 @@ public class GameView extends Game {
     }
     
     private void loadPlayers() {
-        for( Particle particle : game.getPlayers()) {
+        for( Particle particle : game.get("player")) {
             PlayerView player = new PlayerView( particle );
             player.particle.setGameListener(new GameObserver());
             field.addGroup(player.getGroup());
             for(SpriteView sprite : Sprites ) {
-                field.addCollisionGroup( player.getGroup(), sprite.getGroup(), new AgarCollision());
+                field.addCollisionGroup(
+                        player.getGroup(),
+                        sprite.getGroup(),
+                        CollisionFactory.createCollision(
+                                player.getParticle().getType(),
+                                ((SpriteView)sprite).getParticle().getType()
+                        )
+                );
             }
             Sprites.add(player );
         }
     }
     
     private void loadAgars() {
-        for( Particle particle : game.getAgars()) {
+        for( Particle particle : game.get("agar")) {
             AgarView agar = new AgarView( particle );
             agar.particle.setGameListener(new GameObserver());
             field.addGroup(agar.getGroup());
             Sprites.add(0, agar);
+        }
+    }
+    
+    private void loadObstacle() {
+        for( Particle particle : game.get("obstacle")) {
+            ObstacleView obstacle = new ObstacleView( particle );
+            obstacle.particle.setGameListener(new GameObserver());
+            field.addGroup(obstacle.getGroup());
+            Sprites.add(obstacle);
+            for(SpriteView sprite : Sprites ) {
+                field.addCollisionGroup(
+                        sprite.getGroup(),
+                        obstacle.getGroup(),
+                        CollisionFactory.createCollision(
+                                ((SpriteView)sprite).getParticle().getType(),
+                                obstacle.getParticle().getType()
+                        )
+                );
+            }
         }
     }
     
@@ -151,12 +181,12 @@ public class GameView extends Game {
 
         @Override
         public void generatedBot(GameEvent e) {
-            System.out.println("generate agar");
+            System.out.println("generate bot");
         }
 
         @Override
         public void generatedPlayer(GameEvent e) {
-            System.out.println("generate agar");
+            System.out.println("generate player");
         }
     }
 }

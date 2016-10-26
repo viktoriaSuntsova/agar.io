@@ -63,21 +63,9 @@ public class AIController extends Controller {
         //Сообщаем частице выбранный угол
         particle.setAngle(angle);
         //Сообщаем частице выбранную скорость
-        particle.setSpeed(10.0/particle.getSize());
+        particle.setSpeed(8.0/particle.getSize());
         
-        //А вот тут путаемся и плачем
-        /*if( particle.getCollision() != null ) {
-            int dSize = particle.getSize() - particle.getCollision().getSize();
-            // если этот спрайт больше и он достиг центра другой частицы
-            if( dSize > 10 ) {
-                //particle.swallow();
-            } else if( dSize == 0 ) {
-                angle = 360 - angle;
-                particle.setAngle(angle);
-            }
-            particle.setCollision(null);
-        }
-        particle.fireCharacteristicsIsChanged();*/
+        particle.fireCharacteristicsIsChanged();
     }
     
     public String chooseParticle(Particle smallOne, Particle bigOne, Particle agar){
@@ -149,8 +137,8 @@ public class AIController extends Controller {
     }
     
     public Particle findNearestSmallerParticle(){
-        ArrayList<Particle> particlAround = game.getBots();
-        ArrayList<Particle> players = game.getPlayers();
+        ArrayList<Particle> particlAround = game.get("bot");
+        ArrayList<Particle> players = game.get("player");
         particlAround.addAll(players);
         double distToP;
         Particle nearestP = null;
@@ -166,8 +154,8 @@ public class AIController extends Controller {
     }
     
     public Particle findNearestBiggerParticle(){
-        ArrayList<Particle> particlAround = game.getBots();
-        ArrayList<Particle> players = game.getPlayers();
+        ArrayList<Particle> particlAround = game.get("bot");
+        ArrayList<Particle> players = game.get("player");
         particlAround.addAll(players);
         double distToP;
         Particle nearestP = null;
@@ -183,7 +171,7 @@ public class AIController extends Controller {
     }
     
     public Particle findNearestAgar(){
-        ArrayList<Particle> agars = game.getAgars();
+        ArrayList<Particle> agars = game.get("agar");
         double distToP;
         Particle nearestP = null;
         for(Particle p : agars){

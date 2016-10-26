@@ -13,7 +13,9 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import javax.swing.Timer;
 
@@ -26,10 +28,9 @@ public class GameModel {
     /**
      * Группа объектов, участвующих в коллизиях
      */
-    private ArrayList<Particle> players = new ArrayList<>();
-    private ArrayList<Particle> AIplayers = new ArrayList<>();
-    private ArrayList<Particle> agars = new ArrayList<>();
-    private ArrayList<Particle> obstacles = new ArrayList<>();
+    private ArrayList<Particle> particles = new ArrayList<>();
+    
+    //private Map particles = new HashMap<String, ArrayList<String>>();
     
     /**
      * Число ботов
@@ -43,7 +44,7 @@ public class GameModel {
     /**
      * Число ботов
      */
-    private final int obstacleCount = 5;
+    private final int obstacleCount = 10;
     
     private int HEIGHT = 0;
     private int WIDTH = 0;
@@ -52,6 +53,23 @@ public class GameModel {
      * Массив контроллеров для игроков и ботов
      */
     private final List<Controller> controllers = new ArrayList<>();
+    
+    // Класс счетчика частиц
+    private class Counter {
+        private final Map counter = new HashMap<>();
+        
+        public int get(String type) {
+            if(!counter.containsKey(type)) {
+                counter.put(type, 0);
+            }
+            int currentValue = (int) counter.get(type);
+            counter.replace(type, currentValue + 1);
+            return (int) counter.get(type);
+        }
+    }
+    
+    // счетчик частиц разного типа
+    private Counter counter = new Counter();
     
     Timer timer = new Timer(1000, new ActionListener() {
         @Override
@@ -63,6 +81,11 @@ public class GameModel {
     public GameModel(int maxWidth, int maxHeight) {
         WIDTH = maxWidth;
         HEIGHT = maxHeight;
+        //particles.put("bot", new ArrayList<>());
+        //particles.put("player", new ArrayList<>());
+        //particles.put("agar", new ArrayList<>());
+        //particles.put("obstacle", new ArrayList<>());
+        
     }
     
     public void startGame() {
@@ -86,8 +109,7 @@ public class GameModel {
     }
     
     private void recreateParticles() {
-        System.out.println("count agars: " + agars.size());
-        for(int i = agars.size(); i < agarCount; i++) {
+        for(int i = countParticles("agar"); i < agarCount; i++) {
             Particle p = createAgar();
             fireGeneratedAgar(p);
         }
@@ -95,61 +117,53 @@ public class GameModel {
     
     private Point determinePosition() {
         Random r = new Random();
+        
         return new Point(r.nextInt(WIDTH), r.nextInt(HEIGHT));
     }
     
     public Particle createPlayer() {
         Particle particle = new Particle(determinePosition(), "player", "ivan");
-        players.add( particle );
+        particles.add( particle );
         controllers.add( new PlayerController(this, particle) );
         return particle;
     }
     
     public Particle createBot() {
-        Particle particle = new Particle(determinePosition(), "bot", "bot_" + (AIplayers.size() + 1));
-        AIplayers.add( particle );
+        Particle particle = new Particle(determinePosition(), "bot", "bot_" + counter.get("bot"));
+        particles.add( particle );
         controllers.add( new AIController(this, particle) );
         return particle; 
     }
     
     public Particle createAgar() {
-        Particle particle = new Particle(determinePosition(), "agar", "agar_" + (agars.size() + 1));
-        agars.add( particle );
+        Particle particle = new Particle(determinePosition(), "agar", "agar_" + counter.get("agar"));
+        particles.add( particle );
         return particle; 
     }
     
     public Particle createObstacle() {
-        Particle particle = new Particle(determinePosition(), "obstacle", "obstacle_" + (obstacles.size() + 1));
-        obstacles.add( particle );
+        Particle particle = new Particle(determinePosition(), "obstacle", "obstacle_" + counter.get("obstacle"));
+        particles.add( particle );
         return particle; 
     }
     
-    public ArrayList<Particle> getBots() {
-        return (ArrayList<Particle>) AIplayers.clone();
-    }
-    
-    public ArrayList<Particle> getPlayers() {
-        return (ArrayList<Particle>) players.clone();
-    }
-    
-    public ArrayList<Particle> getAgars() {
-        return (ArrayList<Particle>) agars.clone();
+    public ArrayList<Particle> get(String type) {
+        ArrayList<Particle> typeParticles = new ArrayList<>();
+        ArrayList<Particle> cloneParticles = (ArrayList<Particle>) particles.clone();
+        for(Particle p : cloneParticles) {
+            if(p.getType().equals(type))
+                typeParticles.add(p);
+        }
+        return typeParticles;
     }
     
     public Dimension getSize() {
         return new Dimension(WIDTH, HEIGHT);
     }
     
-    public void removeParticle(Particle p){
-        if("player".equals(p.getType())){
-            players.remove(p);
-        }
-        else if("agar".equals(p.getType())){
-            agars.remove(p);
-        }
-        else if("bot".equals(p.getType())){
-            AIplayers.remove(p);
-        }
+    public void removeParticle(Particle p) {
+        particles.remove(p);
+        System.out.println("remove" + p.getName());
         for( Controller c : controllers ) {
             if( c.getParticle() == p ) {
                 controllers.remove(c);
@@ -158,6 +172,14 @@ public class GameModel {
         }
     }
     
+    public int countParticles(String type) {
+        int count = 0;
+        for(Particle p : particles) {
+            if(p.getType().equals(type))
+                count++;
+        }
+        return count;
+    }
     
     private GameListener gameListener = null;
     

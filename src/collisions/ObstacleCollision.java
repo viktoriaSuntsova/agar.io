@@ -18,6 +18,7 @@ public class ObstacleCollision extends BasicCollisionGroup {
         
     @Override
     public void collided(Sprite s1, Sprite s2) {
+        // получаем бота или игрока
         Particle p1 = ((SpriteView)s1).getParticle();
         p1.setSpeed(0);
         p1.fireCharacteristicsIsChanged();

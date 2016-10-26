@@ -54,7 +54,7 @@ public class PlayerController extends Controller {
         } else if( distance > radiusParticle*0.2 && distance < radiusParticle ) {
             particle.setSpeed(0.05);
         } else {
-            particle.setSpeed(0.1);
+            particle.setSpeed(12.0/particle.getSize());
         }
     }
     

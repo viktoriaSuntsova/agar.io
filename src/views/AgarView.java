@@ -20,9 +20,9 @@ public class AgarView extends SpriteView {
         Random r = new Random();
         particle = _particle;
         particle.setSize(r.nextInt(10) + 10);
-        setSpeed(0);
         setColor(Color.BLUE);
         setPosition(particle.getPosition());
+        setSpeed(0);
         group = new SpriteGroup(particle.getName());
         group.add(this);
         particle.addPlayerActionListener(new SpriteView.ParticleObserver());
