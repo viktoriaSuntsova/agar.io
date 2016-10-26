@@ -30,8 +30,6 @@ public class GameModel {
      */
     private ArrayList<Particle> particles = new ArrayList<>();
     
-    //private Map particles = new HashMap<String, ArrayList<String>>();
-    
     /**
      * Число ботов
      */
@@ -44,7 +42,7 @@ public class GameModel {
     /**
      * Число ботов
      */
-    private final int obstacleCount = 10;
+    private final int obstacleCount = 5;
     
     private int HEIGHT = 0;
     private int WIDTH = 0;
@@ -70,7 +68,6 @@ public class GameModel {
     
     // счетчик частиц разного типа
     private Counter counter = new Counter();
-    
     Timer timer = new Timer(1000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -81,11 +78,6 @@ public class GameModel {
     public GameModel(int maxWidth, int maxHeight) {
         WIDTH = maxWidth;
         HEIGHT = maxHeight;
-        //particles.put("bot", new ArrayList<>());
-        //particles.put("player", new ArrayList<>());
-        //particles.put("agar", new ArrayList<>());
-        //particles.put("obstacle", new ArrayList<>());
-        
     }
     
     public void startGame() {
@@ -117,7 +109,6 @@ public class GameModel {
     
     private Point determinePosition() {
         Random r = new Random();
-        
         return new Point(r.nextInt(WIDTH), r.nextInt(HEIGHT));
     }
     
@@ -200,7 +191,6 @@ public class GameModel {
         if( gameListener != null )
             gameListener.generatedBot(e);
     }
-    
     public void fireGeneratedPlayer(Particle p) {
         GameEvent e = new GameEvent();
         e.setParticle(p);

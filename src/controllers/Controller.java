@@ -18,7 +18,7 @@ public class Controller {
     
     protected Particle particle = null;
     
-    protected final int MIN_DITANCE = 100000;
+    protected final int MIN_DITANCE = 500;
     
     public Controller(GameModel _game, Particle _particle) {
         game = _game;

@@ -45,8 +45,8 @@ public class SpriteView extends Sprite {
             // Зарисовать площадь нужным цветом
             g2d = bi.createGraphics();
             g2d.setColor(color);
-            g2d.fillOval(0, 0, bi.getWidth(), bi.getHeight());
-            
+            //g2d.fillOval(0, 0, bi.getWidth(), bi.getHeight());
+            g2d.drawOval(0, 0, bi.getWidth(), bi.getHeight());
             if( !particle.getType().isEmpty() ) {
                 try {
                     //Взять картинку и задать ей нужный размер
