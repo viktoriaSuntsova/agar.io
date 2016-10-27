@@ -33,7 +33,7 @@ public class GameModel {
     /**
      * Число ботов
      */
-    private final int botsCount = 20;
+    private final int botsCount = 1;
     
     /**
      * Число ботов
@@ -42,8 +42,7 @@ public class GameModel {
     /**
      * Число ботов
      */
-    private final int obstacleCount = 5;
-    
+    private final int obstacleCount = 10;    
     private int HEIGHT = 0;
     private int WIDTH = 0;
     
@@ -122,7 +121,9 @@ public class GameModel {
     public Particle createBot() {
         Particle particle = new Particle(determinePosition(), "bot", "bot_" + counter.get("bot"));
         particles.add( particle );
-        controllers.add( new AIController(this, particle) );
+        AIController ai = new AIController(this, particle);
+        controllers.add( ai );
+        particle.addController(ai);
         return particle; 
     }
     
@@ -154,7 +155,6 @@ public class GameModel {
     
     public void removeParticle(Particle p) {
         particles.remove(p);
-        System.out.println("remove" + p.getName());
         for( Controller c : controllers ) {
             if( c.getParticle() == p ) {
                 controllers.remove(c);
