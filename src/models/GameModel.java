@@ -108,7 +108,31 @@ public class GameModel {
     
     private Point determinePosition() {
         Random r = new Random();
-        return new Point(r.nextInt(WIDTH), r.nextInt(HEIGHT));
+        boolean isNewPoint = false;
+        Point point = new Point(r.nextInt(WIDTH), r.nextInt(HEIGHT));
+        while(isNewPoint==false){
+            point = new Point(r.nextInt(WIDTH), r.nextInt(HEIGHT));
+            for (Particle part : particles){
+                double x1 = part.getPosition().getX()-part.getSize()-50;
+                double x2 = part.getPosition().getX()+part.getSize()+50;
+                double y1 = part.getPosition().getY()-part.getSize()-50;
+                double y2 = part.getPosition().getY()+part.getSize()+50;
+                if((point.getX()<x2&&point.getX()>x1)&&(point.getY()<y2&&point.getY()>y1)){
+                    isNewPoint = false;
+                    break;
+                }
+                else{
+                    isNewPoint = true;
+                }
+            }
+            if(particles.isEmpty()){
+                break;
+            }
+        }
+        System.out.print(point.getX()+"\n");
+        System.out.print(point.getY()+"\n");
+
+        return point;
     }
     
     public Particle createPlayer() {
