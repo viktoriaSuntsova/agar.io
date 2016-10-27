@@ -5,6 +5,8 @@
  */
 package models;
 
+import controllers.AIController;
+import controllers.Controller;
 import events.*;
 import java.awt.Color;
 import java.awt.Point;
@@ -48,12 +50,25 @@ public class Particle {
      * размер объекта
      */
     private int size = 50;
-    
+    private int stepsUpdate = 0;
+    Controller cont;
     /**
      * Позиция объекта
      */
     private Point position = null;
     
+    public void stepsUpdate(int _stepsUpdate){
+        stepsUpdate =_stepsUpdate;
+    }
+    public int getStepsUpdate(){
+        return stepsUpdate;
+    }
+    public void addController(Controller _cont){
+        cont = _cont;
+    }
+    public Controller getController(){
+        return cont;
+    }
     public Particle(Point p) {
         position = p;
     }

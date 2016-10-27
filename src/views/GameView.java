@@ -181,12 +181,10 @@ public class GameView extends Game {
 
         @Override
         public void generatedBot(GameEvent e) {
-            System.out.println("generate bot");
         }
 
         @Override
         public void generatedPlayer(GameEvent e) {
-            System.out.println("generate player");
         }
     }
 }

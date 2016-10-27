@@ -22,70 +22,93 @@ public class AIController extends Controller {
         super(game, particle);
     }
     private int stepCount = 0;
+    private int stepObstacleCount = 0;
     private int angleForStep;
+    public void setSteps(int _stepCount){
+        stepObstacleCount = _stepCount;
+    }
+    public int getObstacleSteps(){
+        return stepObstacleCount;
+    }
+     public int getSteps(){
+        return stepCount;
+    }
+    public void setAngleForStep(int _angleForStep){
+        angleForStep = _angleForStep;
+    }
     /**
      * Базовая реализация лишь проверяет, что спрайт не вышел за поля
      * @param mousePosition 
      */
     @Override
     public void update(Point mousePosition) {
-        if(stepCount==0){
-            int angle = checkGoOutBorder();
-            if(angle!=-1){
-                particle.setSpeed(0.1);
+        if(stepObstacleCount==0){
+            if(stepCount==0){
+                int angle = checkGoOutBorder();
+                if(angle!=-1){
+                    particle.setSpeed(0.1);
+                    particle.setAngle(angle);
+                    particle.fireCharacteristicsIsChanged();
+                    angleForStep = angle;
+                    stepCount = (int)(200 + Math.random()*(300));
+                    return;
+                }
+                //найдем самую близкую к нам бактерию больше нас
+                Particle bigOne = findNearestBiggerParticle();
+                //найдем самую близкую к нам бактерию меньше нас
+                Particle smallOne = findNearestSmallerParticle();
+                //найдем самую близкую к нам агарину
+                Particle agar = findNearestAgar();
+                angle = 0;
+                //выберем что приоритетнее в данной ситуации
+                String particleStr = chooseParticle(smallOne,bigOne,agar);
+                //если оказалось приоритетнее убежать от большой бактерии
+                if("bigOne".equals(particleStr)){
+                   //Расчитываем угол до нее
+                   angle = GameMath.angle(particle.getPosition(), bigOne.getPosition());
+                   //Разворачиваемся
+                   angle = 360 - angle;
+                }
+                //если оказалось приоритетнее охотится за маленькой бактерией
+                if("smallOne".equals(particleStr)){
+                    //Расчитываем угол до маленькой бактерии
+                    angle = GameMath.angle(particle.getPosition(), smallOne.getPosition());
+                }
+                //Если оказалось приоритетнее есть агар
+                if("agar".equals(particleStr)){
+                    //Расчитываем угол до агарины
+                     angle = GameMath.angle(particle.getPosition(), agar.getPosition());
+
+                }
+                //Если все равно куда двигаться 
+                if("random".equals(particleStr)){
+                    //Двигаемся рандомно TODO
+                    Random r = new Random();
+                    angle = r.nextInt(360);
+                }
+                //Сообщаем частице выбранный угол
                 particle.setAngle(angle);
+                //Сообщаем частице выбранную скорость
+                particle.setSpeed(3.0/particle.getSize());
+
                 particle.fireCharacteristicsIsChanged();
                 angleForStep = angle;
-                stepCount = (int)(200 + Math.random()*(300));
-                return;
+                stepCount = (int)(50 + Math.random()*(500));
             }
-            //найдем самую близкую к нам бактерию больше нас
-            Particle bigOne = findNearestBiggerParticle();
-            //найдем самую близкую к нам бактерию меньше нас
-            Particle smallOne = findNearestSmallerParticle();
-            //найдем самую близкую к нам агарину
-            Particle agar = findNearestAgar();
-            angle = 0;
-            //выберем что приоритетнее в данной ситуации
-            String particleStr = chooseParticle(smallOne,bigOne,agar);
-            //если оказалось приоритетнее убежать от большой бактерии
-            if("bigOne".equals(particleStr)){
-               //Расчитываем угол до нее
-               angle = GameMath.angle(particle.getPosition(), bigOne.getPosition());
-               //Разворачиваемся
-               angle = 360 - angle;
-            }
-            //если оказалось приоритетнее охотится за маленькой бактерией
-            if("smallOne".equals(particleStr)){
-                //Расчитываем угол до маленькой бактерии
-                angle = GameMath.angle(particle.getPosition(), smallOne.getPosition());
-            }
-            //Если оказалось приоритетнее есть агар
-            if("agar".equals(particleStr)){
-                //Расчитываем угол до агарины
-                 angle = GameMath.angle(particle.getPosition(), agar.getPosition());
-                 
-            }
-            //Если все равно куда двигаться 
-            if("random".equals(particleStr)){
-                //Двигаемся рандомно TODO
-                Random r = new Random();
-                angle = r.nextInt(360);
-            }
-            //Сообщаем частице выбранный угол
-            particle.setAngle(angle);
-            //Сообщаем частице выбранную скорость
-            particle.setSpeed(3.0/particle.getSize());
+            else {
+                 stepCount--; 
+                 particle.setAngle(angleForStep);
+                 particle.fireCharacteristicsIsChanged();
 
-            particle.fireCharacteristicsIsChanged();
-            angleForStep = angle;
-            stepCount = (int)(50 + Math.random()*(500));
-            System.out.print("STEPS" + stepCount);
+            }
         }
         else{
-             stepCount--;
-             particle.setAngle(angleForStep);
+            System.out.print("obs\n");
+            stepObstacleCount--;
+            particle.setAngle(angleForStep);
+            particle.fireCharacteristicsIsChanged();
         }
+        
         
     }
     

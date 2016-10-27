@@ -25,7 +25,7 @@ public class CollisionFactory {
                 collision = new AgarCollision();
             break;
             case "obstacle":
-                collision = new ObstacleCollision();
+                collision = first.equals("bot") ? new ObstacleAICollision(): new ObstaclePlayerCollision();
             break;
         }
         return collision;
