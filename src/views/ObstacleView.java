@@ -20,8 +20,6 @@ public class ObstacleView extends SpriteView {
         particle.setSize(100);
         setColor(Color.GRAY);
         setSpeed(0);
-        group = new SpriteGroup(particle.getName());
-        group.add(this);
         setPosition(particle.getPosition());
     }
 }

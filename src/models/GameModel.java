@@ -12,11 +12,14 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.Thread.yield;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
@@ -33,7 +36,7 @@ public class GameModel {
     /**
      * Число ботов
      */
-    private final int botsCount = 1;
+    private final int botsCount = 6;
     
     /**
      * Число ботов
@@ -70,7 +73,11 @@ public class GameModel {
     Timer timer = new Timer(1000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            recreateParticles();
+            try {
+                recreateParticles();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     });
     
@@ -99,10 +106,14 @@ public class GameModel {
         }
     }
     
-    private void recreateParticles() {
+    private void recreateParticles() throws InterruptedException {
         for(int i = countParticles("agar"); i < agarCount; i++) {
             Particle p = createAgar();
             fireGeneratedAgar(p);
+        }
+        for(int i = countParticles("bot"); i < botsCount; i++) {
+            Particle p = createBot();
+            fireGeneratedBot(p);
         }
     }
     
@@ -191,6 +202,7 @@ public class GameModel {
         if( gameListener != null )
             gameListener.generatedBot(e);
     }
+    
     public void fireGeneratedPlayer(Particle p) {
         GameEvent e = new GameEvent();
         e.setParticle(p);

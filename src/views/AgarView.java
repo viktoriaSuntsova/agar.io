@@ -23,8 +23,6 @@ public class AgarView extends SpriteView {
         setColor(Color.BLUE);
         setPosition(particle.getPosition());
         setSpeed(0);
-        group = new SpriteGroup(particle.getName());
-        group.add(this);
         particle.addPlayerActionListener(new SpriteView.ParticleObserver());
     }
     

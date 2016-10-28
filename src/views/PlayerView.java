@@ -25,8 +25,6 @@ public class PlayerView extends SpriteView {
         setSpeed(particle.getAngle());
         setColor(Color.GREEN);
         setPosition(particle.getPosition());
-        group = new SpriteGroup(particle.getName());
-        group.add(this);
         particle.addPlayerActionListener(new ParticleObserver());
     }
     

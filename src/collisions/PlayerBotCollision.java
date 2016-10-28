@@ -30,6 +30,7 @@ public class PlayerBotCollision extends BasicCollisionGroup {
         // если этот спрайт больше и он достиг центра другой частицы
         if( distanceBetweenSprites - radiusParticle < 5 && dSize > 5 ) {
             p1.swallow(p2);
+            s2.setActive(false);
         }
     }
 }
