@@ -19,12 +19,9 @@ public class BotBotCollision extends BasicCollisionGroup {
 
     @Override
     public void collided(Sprite s1, Sprite s2) {
-        Particle p1 = ((SpriteView)s1).getParticle();
-        Particle p2 = ((SpriteView)s2).getParticle();
-        // будем ссылаться в p1 что он всегда больше
-        Particle tmp = p1.getSize() > p1.getSize() ? p1 : p2;
-        p1 = p1 == tmp ? p1 : p2;
-        p2 = p1 == tmp ? p2 : p1;
+        boolean firstBigest = ((SpriteView)s1).getParticle().getSize() > ((SpriteView)s2).getParticle().getSize();
+        Particle p1 = firstBigest ? ((SpriteView)s1).getParticle() : ((SpriteView)s2).getParticle();
+        Particle p2 = firstBigest ? ((SpriteView)s2).getParticle() : ((SpriteView)s1).getParticle();
         double size_1 = p1.getSize();
         double size_2 = p2.getSize();
         // если первый бот больше второго больше чем на 10

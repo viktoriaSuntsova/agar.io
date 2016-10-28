@@ -33,7 +33,7 @@ public class GameModel {
     /**
      * Число ботов
      */
-    private final int botsCount = 1;
+    private final int botsCount = 10;
     
     /**
      * Число ботов
