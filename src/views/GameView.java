@@ -49,7 +49,6 @@ public class GameView extends Game {
         loadAgars();
         loadBots();
         loadObstacle();
-        loadPlayers();
 
         bg = new TileBackground(getImages("img/background.png", 1, 1), tiles);
         //bg.setClip(0, 0, this.dimensions().width, this.dimensions().height);
