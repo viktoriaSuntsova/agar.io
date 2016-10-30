@@ -22,7 +22,9 @@ public class AgarCollision extends BasicCollisionGroup {
         Particle p1 = ((SpriteView)s1).getParticle();
         Particle p2 = ((SpriteView)s2).getParticle();
         double distance = GameMath.distance(p1.getPosition(), p2.getPosition());
-        if( distance - p1.getSize()/2 < 5 )
+        if( distance - p1.getSize()/2 < 5 ) {
             p1.swallow(p2);
+            s2.setActive(false);
+        }
     }
 }

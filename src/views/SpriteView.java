@@ -8,7 +8,6 @@ package views;
 import com.golden.gamedev.object.*;
 import events.ParticleEvent;
 import events.ParticleListener;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import models.GameMath;
-import models.ImageWork;
 import models.Particle;
 
 /**
@@ -36,8 +34,6 @@ public class SpriteView extends Sprite {
     protected BufferedImage icon = null;
     
     private Graphics2D g2d;
-    
-    protected SpriteGroup group = null;
     
     private void repaint() {
         BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(), BufferedImage.TYPE_INT_ARGB);
@@ -72,10 +68,6 @@ public class SpriteView extends Sprite {
     protected void setSpeed(int angle) {
         setHorizontalSpeed(particle.speed() * Math.cos(GameMath.degreesToRadians(particle.getAngle())));
         setVerticalSpeed(particle.speed() * Math.sin(GameMath.degreesToRadians(particle.getAngle())));
-    }
-    
-    public SpriteGroup getGroup() {
-        return group;
     }
     
     public Particle getParticle() {

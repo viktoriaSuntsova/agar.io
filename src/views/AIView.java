@@ -22,11 +22,9 @@ public class AIView extends SpriteView {
      */
     public AIView(Particle _particle) {
         particle = _particle;
-        setSpeed(0);//particle.getAngle());
+        setSpeed(0);
         setColor(Color.RED);
         setPosition(particle.getPosition());
-        group = new SpriteGroup(particle.getName());
-        group.add(this);
         particle.addPlayerActionListener(new ParticleObserver());
     }
     

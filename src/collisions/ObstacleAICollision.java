@@ -20,14 +20,11 @@ public class ObstacleAICollision extends BasicCollisionGroup {
     
     @Override
     public void collided(Sprite s1, Sprite s2) {
-        System.out.print("coll obs\n");
         Particle p = ((SpriteView)s1).getParticle();
         AIController ai = (AIController)p.getController();
-        //if(ai.getObstacleSteps()==0){
-            int angle = p.getAngle() - 180; 
-            ai.setAngleForStep(angle);
-            ai.setSteps(500);
-        //}
+        int angle = p.getAngle() - 180; 
+        ai.setAngleForStep(angle);
+        ai.setSteps(500);
         p.fireCharacteristicsIsChanged();
     }
 }

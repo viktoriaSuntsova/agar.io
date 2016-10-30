@@ -12,11 +12,14 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.Thread.yield;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
@@ -70,7 +73,11 @@ public class GameModel {
     Timer timer = new Timer(1000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            recreateParticles();
+            try {
+                recreateParticles();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     });
     
@@ -99,16 +106,44 @@ public class GameModel {
         }
     }
     
-    private void recreateParticles() {
+    private void recreateParticles() throws InterruptedException {
         for(int i = countParticles("agar"); i < agarCount; i++) {
             Particle p = createAgar();
             fireGeneratedAgar(p);
+        }
+        for(int i = countParticles("bot"); i < botsCount; i++) {
+            Particle p = createBot();
+            fireGeneratedBot(p);
         }
     }
     
     private Point determinePosition() {
         Random r = new Random();
-        return new Point(r.nextInt(WIDTH), r.nextInt(HEIGHT));
+        boolean isNewPoint = false;
+        Point point = new Point(r.nextInt(WIDTH), r.nextInt(HEIGHT));
+        while(isNewPoint==false){
+            point = new Point(r.nextInt(WIDTH), r.nextInt(HEIGHT));
+            for (Particle part : particles){
+                double x1 = part.getPosition().getX()-part.getSize()-50;
+                double x2 = part.getPosition().getX()+part.getSize()+50;
+                double y1 = part.getPosition().getY()-part.getSize()-50;
+                double y2 = part.getPosition().getY()+part.getSize()+50;
+                if((point.getX()<x2&&point.getX()>x1)&&(point.getY()<y2&&point.getY()>y1)){
+                    isNewPoint = false;
+                    break;
+                }
+                else{
+                    isNewPoint = true;
+                }
+            }
+            if(particles.isEmpty()){
+                break;
+            }
+        }
+        System.out.print(point.getX()+"\n");
+        System.out.print(point.getY()+"\n");
+
+        return point;
     }
     
     public Particle createPlayer() {
@@ -191,6 +226,7 @@ public class GameModel {
         if( gameListener != null )
             gameListener.generatedBot(e);
     }
+    
     public void fireGeneratedPlayer(Particle p) {
         GameEvent e = new GameEvent();
         e.setParticle(p);
