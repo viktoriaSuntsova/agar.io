@@ -20,7 +20,8 @@ public class AgarIo {
      */
     public static void main(String[] args) {
         GameLoader game = new GameLoader();
-        game.setup(new GameView(), new Dimension(800,600), false);//Инициализация графического движка
+        GameView game_view = new GameView();
+        game.setup(game_view, new Dimension(800,600), false);//Инициализация графического движка
         game.start();
     }
     

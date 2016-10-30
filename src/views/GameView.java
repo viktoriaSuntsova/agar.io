@@ -58,7 +58,6 @@ public class GameView extends Game {
         loadAgars();
         loadBots();
         loadObstacle();
-        loadPlayers();
         
         field.addGroup(agarParticles);
         field.addGroup(obstacleParticles);

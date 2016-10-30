@@ -47,6 +47,7 @@ public class AIController extends Controller {
     public void setAngleForStep(int _angleForStep){
         angleForStep = _angleForStep;
     }
+    
     /**
      * Базовая реализация лишь проверяет, что спрайт не вышел за поля
      * @param mousePosition 
@@ -116,8 +117,6 @@ public class AIController extends Controller {
             particle.setAngle(angleForStep);
             particle.fireCharacteristicsIsChanged();
         }
-        
-        
     }
     
     public Priority chooseParticle(Particle smallOne, Particle bigOne, Particle agar){
