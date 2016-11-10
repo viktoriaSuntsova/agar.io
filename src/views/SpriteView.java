@@ -33,20 +33,27 @@ public class SpriteView extends Sprite {
     
     protected BufferedImage icon = null;
     
-    private Graphics2D g2d;
+    public Graphics2D g2d;
     
-    private void repaint() {
+    protected String image = "";
+    
+    protected void repaint() {
+        image = image.isEmpty() ? "img/" + particle.getType() + ".png" : image;
         BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(), BufferedImage.TYPE_INT_ARGB);
         if (color != null) {
             // Зарисовать площадь нужным цветом
             g2d = bi.createGraphics();
             g2d.setColor(color);
-            //g2d.fillOval(0, 0, bi.getWidth(), bi.getHeight());
             g2d.drawOval(0, 0, bi.getWidth(), bi.getHeight());
             if( !particle.getType().isEmpty() ) {
                 try {
+                    File newImage = new File(image);
+                    if(!newImage.isFile()) {
+                        System.err.println("The file: " + image + " - not found!");
+                        return;
+                    }
                     //Взять картинку и задать ей нужный размер
-                    Image originalImage = ImageIO.read(new File("img/" + particle.getType() + ".png"));
+                    Image originalImage = ImageIO.read(newImage);
                     Image scaled = originalImage.getScaledInstance(particle.getSize(), particle.getSize(), Image.SCALE_SMOOTH);
                     //Создать  BufferedImage
                     BufferedImage avatar = new BufferedImage(scaled.getWidth(null), scaled.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -60,7 +67,6 @@ public class SpriteView extends Sprite {
                     Logger.getLogger("No such file in the directory");
                 }
             }
-            
             this.setImage(bi);
         }
     }

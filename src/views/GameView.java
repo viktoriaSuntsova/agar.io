@@ -123,7 +123,10 @@ public class GameView extends Game {
             bg.setToCenter(player);
         }
         String draw = "YOU ATE " + AteParticles + " PARTICLES";
-        font.drawString(g, draw, 9, 9);
+        String namePlayer = player == null ? "DO YOU WANT CONNETION?" : "YOUR NAME " 
+                + player.particle.getName().toUpperCase();
+        font.drawString(g, namePlayer, 9, 9);
+        font.drawString(g, draw, 9, 30);
     }
     
     /**
