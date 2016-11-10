@@ -12,7 +12,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.lang.Thread.yield;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,12 +35,12 @@ public class GameModel {
     /**
      * Число ботов
      */
-    private final int botsCount = 6;
+    private final int botsCount = 25;
     
     /**
      * Число ботов
      */
-    private final int agarCount = 100;
+    private final int agarCount = 50;
     /**
      * Число ботов
      */
@@ -86,17 +85,16 @@ public class GameModel {
         HEIGHT = maxHeight;
     }
     
-    public void startGame() {
-        for(int i = 0; i < botsCount; i++) {
-            createBot();
-        }
+    public void startGame(int agarCount, int botsCount, int obstacleCount) {
         for(int i = 0; i < agarCount; i++) {
             createAgar();
         }
         for(int i = 0; i < obstacleCount; i++) {
             createObstacle();
         }
-        createPlayer();
+        for(int i = 0; i < botsCount; i++) {
+            createBot();
+        }
         timer.start();
     }
     
@@ -140,14 +138,11 @@ public class GameModel {
                 break;
             }
         }
-        System.out.print(point.getX()+"\n");
-        System.out.print(point.getY()+"\n");
-
         return point;
     }
     
-    public Particle createPlayer() {
-        Particle particle = new Particle(determinePosition(), "player", "ivan");
+    public Particle createPlayer(String name) {
+        Particle particle = new Particle(determinePosition(), "player", name);
         particles.add( particle );
         controllers.add( new PlayerController(this, particle) );
         return particle;

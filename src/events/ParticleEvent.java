@@ -12,7 +12,7 @@ import models.Particle;
  *
  * @author 999
  */
-public class ParticleEvent extends EventObject  {
+public class ParticleEvent extends EventObject {
     
     Particle particle = null;
     

@@ -5,9 +5,16 @@
  */
 package views;
 
-import com.golden.gamedev.object.SpriteGroup;
+import events.ParticleEvent;
+import events.ParticleListener;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import models.Particle;
 
 /** Здесь будет
@@ -28,4 +35,8 @@ public class PlayerView extends SpriteView {
         particle.addPlayerActionListener(new ParticleObserver());
     }
     
+    public void setPicture(String picture) {
+        image = picture;
+        repaint();
+    }
 }

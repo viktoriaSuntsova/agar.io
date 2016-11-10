@@ -8,8 +8,6 @@ package controllers;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.GameMath;
 import models.GameModel;
 import models.Particle;
@@ -20,21 +18,12 @@ import models.Particle;
  */
 public class AIController extends Controller {
     
-    private int stepCount = 0;
-    private int stepObstacleCount = 0;
-    private int angleForStep;
-    
-    enum Priority {
-        BIG_ONE,
-        SMALL_ONE,
-        AGAR,
-        RANDOM
-    }
-    
     public AIController(GameModel game, Particle particle) {
         super(game, particle);
     }
-    
+    private int stepCount = 0;
+    private int stepObstacleCount = 0;
+    private int angleForStep;
     public void setSteps(int _stepCount){
         stepObstacleCount = _stepCount;
     }
@@ -47,6 +36,14 @@ public class AIController extends Controller {
     public void setAngleForStep(int _angleForStep){
         angleForStep = _angleForStep;
     }
+    
+    enum Priority {
+        BIG_ONE,
+        SMALL_ONE,
+        AGAR,
+        RANDOM
+    }
+    
     /**
      * Базовая реализация лишь проверяет, что спрайт не вышел за поля
      * @param mousePosition 
@@ -61,63 +58,87 @@ public class AIController extends Controller {
                     particle.setAngle(angle);
                     particle.fireCharacteristicsIsChanged();
                     angleForStep = angle;
-                    stepCount = (int)(200 + Math.random()*(300));
+                    stepCount = (int)(10 + Math.random()*(30));
                     return;
                 }
-                try {
-                    ArrayList<Particle> particlAround = game.get("bot");
-                    ArrayList<Particle> players = game.get("player");
-                    //найдем самую близкую к нам бактерию больше нас
-                    Particle bigOne = findNearestBiggerParticle(particlAround, players);
-                    //найдем самую близкую к нам бактерию меньше нас
-                    Particle smallOne = findNearestSmallerParticle(particlAround, players);
-                    //найдем самую близкую к нам агарину
-                    Particle agar = findNearestAgar();
-                    
-                    //выберем что приоритетнее в данной ситуации
-                    Priority priority = chooseParticle(smallOne, bigOne, agar);
-                    //если оказалось приоритетнее убежать от большой бактерии
-                    switch(priority) {
-                        case BIG_ONE:
-                            angle = 360 - GameMath.angle(particle.getPosition(), bigOne.getPosition());
-                            break;
-                        case SMALL_ONE:
-                            angle = GameMath.angle(particle.getPosition(), smallOne.getPosition());
-                            break;
-                        case AGAR:
-                            angle = GameMath.angle(particle.getPosition(), agar.getPosition());
-                            break;
-                        case RANDOM:
-                            Random r = new Random();
-                            angle = r.nextInt(360);
-                            break;
-                    }
-                    //Сообщаем частице выбранный угол
-                    particle.setAngle(angle);
-                    //Сообщаем частице выбранную скорость
-                    particle.setSpeed(5.0/particle.getSize());
+                ArrayList<Particle> particlAround = game.get("bot");
+                ArrayList<Particle> players = game.get("player");
+                //найдем самую близкую к нам бактерию больше нас
+                Particle bigOne = findNearestBiggerParticle(particlAround, players);
+                //найдем самую близкую к нам бактерию меньше нас
+                Particle smallOne = findNearestSmallerParticle(particlAround, players);
+                //найдем самую близкую к нам агарину
+                Particle agar = findNearestAgar();
+                angle = 0;
+                //выберем что приоритетнее в данной ситуации
+                //выберем что приоритетнее в данной ситуации
+                Priority priority = chooseParticle(smallOne, bigOne, agar);
+                //если оказалось приоритетнее убежать от большой бактерии
+                switch(priority) {
+                    case BIG_ONE:
+                        angle = 360 - GameMath.angle(particle.getPosition(), bigOne.getPosition());
+                        break;
+                    case SMALL_ONE:
+                        angle = GameMath.angle(particle.getPosition(), smallOne.getPosition());
+                        break;
+                    case AGAR:
+                        angle = GameMath.angle(particle.getPosition(), agar.getPosition());
+                        break;
+                    case RANDOM:
+                        Random r = new Random();
+                        angle = r.nextInt(360);
+                        break;
+                }
+                //Сообщаем частице выбранный угол
+                particle.setAngle(angle);
+                //Сообщаем частице выбранную скорость
+                particle.setSpeed(3.0/particle.getSize());
 
+                
+                particle.fireCharacteristicsIsChanged();
+                angleForStep = angle;
+                stepCount = (int)(10 + Math.random()*(30));
+                angle = checkGoOutBorder();
+                if(angle!=-1){
+                    particle.setSpeed(0.1);
+                    particle.setAngle(angle);
                     particle.fireCharacteristicsIsChanged();
                     angleForStep = angle;
-                    stepCount = (int)(50 + Math.random()*(500));
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(AIController.class.getName()).log(Level.SEVERE, null, ex);
+                    stepCount = (int)(10 + Math.random()*(30));
+                    return;
                 }
+                
             }
             else {
                  stepCount--; 
                  particle.setAngle(angleForStep);
-                 particle.fireCharacteristicsIsChanged();
-
+                 
+                 int angle = checkGoOutBorder();
+                if(angle!=-1){
+                    particle.setSpeed(0.1);
+                    particle.setAngle(angle);
+                    particle.fireCharacteristicsIsChanged();
+                    angleForStep = angle;
+                    stepCount = (int)(10 + Math.random()*(30));
+                    return;
+                }
+                particle.fireCharacteristicsIsChanged();
             }
         }
         else{
             stepObstacleCount--;
             particle.setAngle(angleForStep);
+            int angle = checkGoOutBorder();
+                if(angle!=-1){
+                    particle.setSpeed(0.1);
+                    particle.setAngle(angle);
+                    particle.fireCharacteristicsIsChanged();
+                    angleForStep = angle;
+                    stepCount = (int)(10 + Math.random()*(50));
+                    return;
+                }
             particle.fireCharacteristicsIsChanged();
         }
-        
-        
     }
     
     public Priority chooseParticle(Particle smallOne, Particle bigOne, Particle agar){
@@ -129,7 +150,7 @@ public class AIController extends Controller {
         }
         //Если на поле есть бактерии больше меня
         else if (bigOne != null) {
-            // Если бактерий меньше меня нет
+           // Если бактерий меньше меня нет
             if(smallOne == null) {
                 //Если на поле только большая бактерия и я, убегаем от большой
                 if(agar == null)
@@ -139,8 +160,8 @@ public class AIController extends Controller {
                     double distanceToBig = GameMath.distance(particle.getPosition(),bigOne.getPosition()) 
                             - bigOne.getSize()/2;
                     double distanceToAgar = GameMath.distance(particle.getPosition(),bigOne.getPosition());
-                    //Если до агара ближе чем до большой бактерии
-                    priority = distanceToBig > distanceToAgar ? Priority.AGAR : Priority.BIG_ONE;
+                     //Если до агара ближе чем до большой бактерии
+                     priority = distanceToBig > distanceToAgar ? Priority.AGAR : Priority.BIG_ONE;
                 }
             }
             // Если на поле есть бактерии больше и меньше меня
@@ -199,7 +220,7 @@ public class AIController extends Controller {
     
     
     // !TODO Здесь можно оставить
-    public Particle findNearestAgar() throws InterruptedException{
+    public Particle findNearestAgar(){
         ArrayList<Particle> agars = game.get("agar");
         double distToP;
         Particle nearestP = null;
@@ -216,6 +237,7 @@ public class AIController extends Controller {
     public void setCollision(int angle) {
             particle.setAngle(angle);
             particle.setSpeed(0.1);
+        
     }
     
     public int checkGoOutBorder() {

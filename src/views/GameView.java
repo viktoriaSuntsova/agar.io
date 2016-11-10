@@ -5,20 +5,19 @@
  */
 package views;
 
+import settings.PlayerSettings;
 import collisions.*;
 import com.golden.gamedev.Game;
+import com.golden.gamedev.funbox.GameSettings;
+import com.golden.gamedev.object.GameFont;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.TileBackground;
-import com.golden.gamedev.object.collision.BasicCollisionGroup;
 import events.*;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import static java.lang.Thread.yield;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.GameModel;
 import models.Particle;
 
@@ -31,7 +30,7 @@ public class GameView extends Game {
     private final int WIDTH = 2000;
     private final int HEIGHT = 1000;
     
-    private int[][] tiles = new int[WIDTH][HEIGHT];
+    private final int[][] tiles = new int[WIDTH][HEIGHT];
     
     private final PlayField field = new PlayField();
     
@@ -41,7 +40,7 @@ public class GameView extends Game {
     private TileBackground bg = null;
     
     
-    private GameModel game = new GameModel(WIDTH, HEIGHT);
+    private final GameModel game = new GameModel(WIDTH, HEIGHT);
     
     ArrayList<SpriteView> Sprites = new ArrayList<>();
     
@@ -49,16 +48,49 @@ public class GameView extends Game {
     private SpriteGroup obstacleParticles = new SpriteGroup("obstacle");
     private ArrayList<SpriteGroup> enemies = new ArrayList<>();
     private SpriteGroup player = new SpriteGroup("player");
+    
+    private int countBot = 0;
+    private int countAgar = 0;
+    private int countObstacle = 0;
+    private boolean isCreatePlayer = true;
+    
+    PlayerSettings settings = null;
+    
+    private GameFont font;
+    private GameFont bigFont;
+    
+    private int AteParticles = 0;
+    
+    private String resultString = "";
+    private String againString = "PRESS \"SPACE\" AND WILL START YOUR GAME!";
+
+    public void addPlayer(String name, String picture) {
+        Particle _player = game.createPlayer(name);
+        PlayerView pl = new PlayerView(_player);
+        pl.setPicture(picture);
+        pl.particle.setGameListener(new GameObserver());
+        player.add(pl);
+    }
+    
+    public void setSettings(int cAgar, int cBot, int cObstacle, boolean playerCreate) {
+        countAgar       = cAgar;
+        countBot        = cBot;
+        countObstacle   = cObstacle;
+        isCreatePlayer  = playerCreate;
+    }
 
     @Override
     public void initResources() {
-        
-        game.startGame();
+        game.startGame(countAgar, countBot, countObstacle);
         game.setGameListener(new GameObserver());
+        
+        
+        font  = fontManager.getFont(getImage("libs/font.fnt"));
+        bigFont  = fontManager.getFont(getImage("libs/font.fnt"));
+
         loadAgars();
         loadBots();
         loadObstacle();
-        loadPlayers();
         
         field.addGroup(agarParticles);
         field.addGroup(obstacleParticles);
@@ -69,9 +101,17 @@ public class GameView extends Game {
         field.addCollisionGroup(player, agarParticles, new AgarCollision());
         field.addCollisionGroup(player, obstacleParticles, new ObstaclePlayerCollision());
 
+        
+        
         bg = new TileBackground(getImages("img/background.png", 1, 1), tiles);
 
         field.setBackground(bg);
+        
+        settings = new PlayerSettings();
+        settings.setGameListener(new GameObserver());
+        if(!isCreatePlayer) {
+            settings.setVisible(true);
+        }
     }
 
     @Override
@@ -79,6 +119,12 @@ public class GameView extends Game {
         game.updateGame(mousePosition());
         bg.update(l);
         field.update(l);
+    }
+    
+    @Override
+    public boolean keyPressed(int keyCode) {
+        System.out.println("" + keyCode);
+        return false;
     }
 
     @Override
@@ -88,6 +134,19 @@ public class GameView extends Game {
         PlayerView player = (PlayerView) this.player.getActiveSprite();
         if (player != null) {
             bg.setToCenter(player);
+        }
+        String draw = "YOU ATE " + AteParticles + " PARTICLES";
+        String namePlayer = player == null ? "DO YOU WANT CONNETION?" : "YOUR NAME " 
+                + player.particle.getName().toUpperCase();
+        font.drawString(g, namePlayer, 9, 9);
+        font.drawString(g, draw, 9, 30);
+        
+        if(player == null) {
+            font.drawString(g, resultString, 240, 250);
+            font.drawString(g, againString, 180, 300);
+        } else {
+            font.drawString(g, "", 180, 200);
+            font.drawString(g, "", 180, 300);
         }
     }
     
@@ -109,12 +168,13 @@ public class GameView extends Game {
             SpriteGroup aiGroup = new SpriteGroup(particle.getName());
             aiGroup.add(ai);
             field.addGroup(aiGroup);
-            for(SpriteGroup enemy : enemies ) {
-                field.addCollisionGroup(enemy, aiGroup, new BotBotCollision());
-            }
             field.addCollisionGroup(aiGroup, agarParticles, new AgarCollision());
             field.addCollisionGroup(aiGroup, obstacleParticles, new ObstacleAICollision());
             field.addCollisionGroup(player, aiGroup, new PlayerBotCollision());
+            for(SpriteGroup enemy : enemies ) {
+                field.addCollisionGroup(enemy, aiGroup, new BotBotCollision());
+            }
+            enemies.add(aiGroup);
             Sprites.add(ai);
         }
     }
@@ -155,12 +215,19 @@ public class GameView extends Game {
 
         @Override
         public void ParticleDied(GameEvent e) {
-            game.removeParticle(e.getParticle());
+            Particle p = e.getParticle();
+            game.removeParticle(p);
             agarParticles.removeInactiveSprites();
-            SpriteGroup sg = field.getGroup(e.getParticle().getName());
+            SpriteGroup sg = field.getGroup(p.getName());
             if(sg != null) {
                 field.removeGroup(sg);
                 enemies.remove(sg);
+            }
+            if(p.getType().equals("player")) {
+                player.removeInactiveSprites();
+                resultString = "YOU LOSE WITH SCORE: " + AteParticles;
+                AteParticles = 0;
+                settings.setVisible(true);
             }
         }
 
@@ -188,6 +255,16 @@ public class GameView extends Game {
 
         @Override
         public void generatedPlayer(GameEvent e) {
+        }
+
+        @Override
+        public void AteParticle() {
+            AteParticles = AteParticles == -1 ? 0 : (AteParticles + 1);
+        }
+
+        @Override
+        public void createNewPlayer(String name, String ava) {
+            addPlayer(name, ava);
         }
     }
 }

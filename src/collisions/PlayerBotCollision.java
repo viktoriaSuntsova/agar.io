@@ -24,13 +24,17 @@ public class PlayerBotCollision extends BasicCollisionGroup {
         boolean firstBigest = ((SpriteView)s1).getParticle().getSize() > ((SpriteView)s2).getParticle().getSize();
         Particle p1 = firstBigest ? ((SpriteView)s1).getParticle() : ((SpriteView)s2).getParticle();
         Particle p2 = firstBigest ? ((SpriteView)s2).getParticle() : ((SpriteView)s1).getParticle();
-        int radiusParticle = p1.getSize()/2;
-        int dSize = p1.getSize() - p2.getSize();
-        double distanceBetweenSprites = GameMath.distance(p1.getPosition(), p2.getPosition());
-        // если этот спрайт больше и он достиг центра другой частицы
-        if( distanceBetweenSprites - radiusParticle < 5 && dSize > 5 ) {
-            p1.swallow(p2);
-            s2.setActive(false);
+        double size_1 = p1.getSize();
+        double size_2 = p2.getSize();
+        // если первый бот больше второго больше чем на 10
+        // необходимо съесть второго
+        if( size_1 - size_2 > 10) {
+            double distance = GameMath.distance(p1.getPosition(), p2.getPosition());
+            if(distance - 10 < size_1/2) {
+               p1.swallow(p2);
+               if(firstBigest) s2.setActive(false);
+               else s1.setActive(false);
+            }
         }
     }
 }
