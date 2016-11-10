@@ -5,21 +5,13 @@
  */
 package events;
 
-import models.Particle;
+import java.util.EventListener;
 
 /**
  *
  * @author 999
  */
-public class GameEvent {
-    
-    Particle particle = null;
-
-    public void setParticle(Particle p) {
-        particle = p;
-    }
-    
-    public Particle getParticle() {
-        return particle;
-    }
+public interface GlobalGameListener extends EventListener {
+    public void StartGame(GlobalGameEvent e);
+    public void StartGameWithPlayer(GlobalGameEvent e);
 }

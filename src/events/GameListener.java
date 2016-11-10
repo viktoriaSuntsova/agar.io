@@ -13,6 +13,7 @@ import java.util.EventListener;
  */
 public interface GameListener extends EventListener {
     
+    public void AteParticle();
     public void ParticleDied(GameEvent e);
     
     public void generatedAgar(GameEvent e);

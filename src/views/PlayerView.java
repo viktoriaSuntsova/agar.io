@@ -5,9 +5,7 @@
  */
 package views;
 
-import com.golden.gamedev.object.SpriteGroup;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import models.Particle;
 
 /** Здесь будет
@@ -28,4 +26,7 @@ public class PlayerView extends SpriteView {
         particle.addPlayerActionListener(new ParticleObserver());
     }
     
+    public void setPicture(String picture) {
+        
+    }
 }

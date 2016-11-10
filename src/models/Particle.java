@@ -5,7 +5,6 @@
  */
 package models;
 
-import controllers.AIController;
 import controllers.Controller;
 import events.*;
 import java.awt.Color;
@@ -130,6 +129,8 @@ public class Particle {
         int newSize = (int)(Math.sqrt(allSquare/3.14)+0.99);
         setSize(newSize);
         fireParticleIsIncrease();
+        if(getType().equals("player"))
+            fireAteParticle();
         p.fireParticleDied();
     }
     
@@ -163,5 +164,10 @@ public class Particle {
         e.setParticle(this);
         if( gameListener != null )
             gameListener.ParticleDied(e);
+    }
+    
+    public void fireAteParticle() {
+        if( gameListener != null )
+            gameListener.AteParticle();
     }
 }

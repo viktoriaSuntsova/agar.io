@@ -24,7 +24,7 @@ public class ObstacleAICollision extends BasicCollisionGroup {
         AIController ai = (AIController)p.getController();
         int angle = p.getAngle() - 180; 
         ai.setAngleForStep(angle);
-        ai.setSteps(500);
+        ai.setSteps((int)(10 + Math.random()*(30)));
         p.fireCharacteristicsIsChanged();
     }
 }
