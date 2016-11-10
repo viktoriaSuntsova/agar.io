@@ -30,7 +30,7 @@ public class PlayerBotCollision extends BasicCollisionGroup {
         // необходимо съесть второго
         if( size_1 - size_2 > 10) {
             double distance = GameMath.distance(p1.getPosition(), p2.getPosition());
-            if(size_1/2 - distance < size_1/4) {
+            if(distance - 10 < size_1/2) {
                p1.swallow(p2);
                if(firstBigest) s2.setActive(false);
                else s1.setActive(false);

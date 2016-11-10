@@ -107,10 +107,10 @@ public class GameView extends Game {
 
         field.setBackground(bg);
         
+        settings = new PlayerSettings();
+        settings.setGameListener(new GameObserver());
         if(!isCreatePlayer) {
-            settings = new PlayerSettings();
             settings.setVisible(true);
-            settings.setGameListener(new GameObserver());
         }
     }
 
