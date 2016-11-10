@@ -7,8 +7,17 @@ package settings;
 
 import com.golden.gamedev.GameLoader;
 import java.awt.Dimension;
+import java.awt.FileDialog;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import views.GameView;
 
@@ -62,6 +71,7 @@ public class GameSettings extends com.golden.gamedev.funbox.GameSettings {
         jLabel5 = new javax.swing.JLabel();
         selectAva = new javax.swing.JButton();
         ava = new javax.swing.JLabel();
+        
         jLabel7 = new javax.swing.JLabel();
         name = new javax.swing.JTextField();
         connection = new javax.swing.JButton();
@@ -213,6 +223,17 @@ public class GameSettings extends com.golden.gamedev.funbox.GameSettings {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         addGameListeners();
+        try {
+            File file = new File("img/player.png");
+            if(file.isFile()) {
+                Image img = ImageIO.read(file);
+                ava.setIcon(new ImageIcon(img));
+            } else {
+                //error.setText("Image not found!");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(GameSettings.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return window;
     }
     
@@ -235,14 +256,27 @@ public class GameSettings extends com.golden.gamedev.funbox.GameSettings {
                 GameSettings.CountObstacle = (int) obstacleCount.getValue();
                 GameSettings.CreatePlayer = true;
                 GameSettings.namePlayer = name.getText();
-                GameSettings.avaPlayer = ava.getText();
                 settings.btnOK.doClick();
             }
         });
         selectAva.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("select ava");
+                JFrame frame = new JFrame();
+                FileDialog dialog = new FileDialog(frame, "Выбирите файл...", FileDialog.LOAD);
+                dialog.setVisible(true);
+                String directory = dialog.getDirectory();
+                String image = dialog.getFile();
+                GameSettings.avaPlayer = directory + image;
+                try {
+                    File file = new File(GameSettings.avaPlayer);
+                    if(file.isFile()) {
+                        Image img = ImageIO.read(file);
+                        ava.setIcon(new ImageIcon(img));
+                    }
+                } catch (IOException ex) {
+                    System.err.println("Error: image not found!");
+                }
             }
         });
     }
