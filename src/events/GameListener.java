@@ -14,6 +14,7 @@ import java.util.EventListener;
 public interface GameListener extends EventListener {
     
     public void AteParticle();
+    
     public void ParticleDied(GameEvent e);
     
     public void generatedAgar(GameEvent e);
@@ -21,5 +22,7 @@ public interface GameListener extends EventListener {
     public void generatedBot(GameEvent e);
     
     public void generatedPlayer(GameEvent e);
+    
+    public void createNewPlayer(String name, String ava);
     
 }

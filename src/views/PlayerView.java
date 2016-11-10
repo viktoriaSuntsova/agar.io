@@ -5,6 +5,8 @@
  */
 package views;
 
+import events.ParticleEvent;
+import events.ParticleListener;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;

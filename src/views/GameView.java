@@ -57,8 +57,12 @@ public class GameView extends Game {
     PlayerSettings settings = null;
     
     private GameFont font;
+    private GameFont bigFont;
     
     private int AteParticles = 0;
+    
+    private String resultString = "";
+    private String againString = "PRESS \"SPACE\" AND WILL START YOUR GAME!";
 
     public void addPlayer(String name, String picture) {
         Particle _player = game.createPlayer(name);
@@ -82,6 +86,8 @@ public class GameView extends Game {
         
         
         font  = fontManager.getFont(getImage("libs/font.fnt"));
+        bigFont  = fontManager.getFont(getImage("libs/font.fnt"));
+
         loadAgars();
         loadBots();
         loadObstacle();
@@ -104,6 +110,7 @@ public class GameView extends Game {
         if(!isCreatePlayer) {
             settings = new PlayerSettings();
             settings.setVisible(true);
+            settings.setGameListener(new GameObserver());
         }
     }
 
@@ -112,6 +119,12 @@ public class GameView extends Game {
         game.updateGame(mousePosition());
         bg.update(l);
         field.update(l);
+    }
+    
+    @Override
+    public boolean keyPressed(int keyCode) {
+        System.out.println("" + keyCode);
+        return false;
     }
 
     @Override
@@ -127,6 +140,14 @@ public class GameView extends Game {
                 + player.particle.getName().toUpperCase();
         font.drawString(g, namePlayer, 9, 9);
         font.drawString(g, draw, 9, 30);
+        
+        if(player == null) {
+            font.drawString(g, resultString, 240, 250);
+            font.drawString(g, againString, 180, 300);
+        } else {
+            font.drawString(g, "", 180, 200);
+            font.drawString(g, "", 180, 300);
+        }
     }
     
     /**
@@ -204,7 +225,9 @@ public class GameView extends Game {
             }
             if(p.getType().equals("player")) {
                 player.removeInactiveSprites();
-                AteParticles = -1;
+                resultString = "YOU LOSE WITH SCORE: " + AteParticles;
+                AteParticles = 0;
+                settings.setVisible(true);
             }
         }
 
@@ -237,6 +260,11 @@ public class GameView extends Game {
         @Override
         public void AteParticle() {
             AteParticles = AteParticles == -1 ? 0 : (AteParticles + 1);
+        }
+
+        @Override
+        public void createNewPlayer(String name, String ava) {
+            addPlayer(name, ava);
         }
     }
 }

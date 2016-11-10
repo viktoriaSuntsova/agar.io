@@ -6,6 +6,7 @@
 package settings;
 
 import com.golden.gamedev.GameLoader;
+import events.GameListener;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Image;

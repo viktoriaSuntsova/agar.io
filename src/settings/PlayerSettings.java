@@ -5,6 +5,9 @@
  */
 package settings;
 
+import events.GameListener;
+import events.ParticleEvent;
+import events.ParticleListener;
 import java.awt.FileDialog;
 import java.awt.Image;
 import java.io.File;
@@ -33,6 +36,7 @@ public class PlayerSettings extends javax.swing.JDialog {
     public PlayerSettings() {
         setLocation(500, 200);
         initComponents();
+        playerAva = ava.getIcon().toString();
     }
 
     /**
@@ -143,11 +147,13 @@ public class PlayerSettings extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void connectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectionActionPerformed
+        playerName = name.getText();
         if(playerName.isEmpty()) {
             error.setText("Please, enter your name...");
             return;
         }
-        
+        fireCreateNewPlayer();
+        this.setVisible(false);
     }//GEN-LAST:event_connectionActionPerformed
 
     private void avaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avaActionPerformed
@@ -220,4 +226,16 @@ public class PlayerSettings extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField name;
     // End of variables declaration//GEN-END:variables
+    
+    private GameListener gameListener = null;
+    
+    public void setGameListener( GameListener g ) {
+        gameListener = g;
+    }
+    
+    public void fireCreateNewPlayer() {
+        ((GameListener)gameListener).createNewPlayer(playerName, playerAva);
+    }
+    
+
 }
