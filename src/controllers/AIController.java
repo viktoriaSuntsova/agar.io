@@ -54,7 +54,8 @@ public class AIController extends Controller {
             if(stepCount==0){
                 int angle = checkGoOutBorder();
                 if(angle!=-1){
-                    particle.setSpeed(0.1);
+                    particle.setSpeed(3.0/particle.getSize());
+                    //particle.setSpeed(0.1);
                     particle.setAngle(angle);
                     particle.fireCharacteristicsIsChanged();
                     angleForStep = angle;
@@ -97,14 +98,15 @@ public class AIController extends Controller {
                 
                 particle.fireCharacteristicsIsChanged();
                 angleForStep = angle;
-                stepCount = (int)(10 + Math.random()*(30));
+                stepCount = (int)(5 + Math.random()*(20));
                 angle = checkGoOutBorder();
                 if(angle!=-1){
-                    particle.setSpeed(0.1);
+                    //particle.setSpeed(0.1);
+                    particle.setSpeed(3.0/particle.getSize());
                     particle.setAngle(angle);
                     particle.fireCharacteristicsIsChanged();
                     angleForStep = angle;
-                    stepCount = (int)(10 + Math.random()*(30));
+                    stepCount = (int)(20 + Math.random()*(200));
                     return;
                 }
                 
@@ -119,7 +121,7 @@ public class AIController extends Controller {
                     particle.setAngle(angle);
                     particle.fireCharacteristicsIsChanged();
                     angleForStep = angle;
-                    stepCount = (int)(10 + Math.random()*(30));
+                    stepCount = (int)(20 + Math.random()*(200));
                     return;
                 }
                 particle.fireCharacteristicsIsChanged();
@@ -130,11 +132,12 @@ public class AIController extends Controller {
             particle.setAngle(angleForStep);
             int angle = checkGoOutBorder();
                 if(angle!=-1){
-                    particle.setSpeed(0.1);
+                    //particle.setSpeed(0.1);
+                    particle.setSpeed(3.0/particle.getSize());
                     particle.setAngle(angle);
                     particle.fireCharacteristicsIsChanged();
                     angleForStep = angle;
-                    stepCount = (int)(10 + Math.random()*(50));
+                    stepCount = (int)(20 + Math.random()*(200));
                     return;
                 }
             particle.fireCharacteristicsIsChanged();

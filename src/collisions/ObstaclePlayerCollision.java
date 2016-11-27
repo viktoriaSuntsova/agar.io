@@ -29,7 +29,7 @@ public class ObstaclePlayerCollision extends BasicCollisionGroup {
         
         double O0_O2 = (double)(p1.getSize()/2+p2.getSize()/2);
         double O0_O1 = (double)(GameMath.distance((int)(s1.getX()),(int)(s1.getY()),(int)(s2.getX()),(int)(s2.getY())));
-        if(O0_O1<O0_O2){
+        if(O0_O1<=O0_O2){
             int newX, X;
             int newY, Y;
             X = (int) (O0_O2*(Math.abs(s2.getX()-s1.getX()))/O0_O1);
@@ -54,7 +54,7 @@ public class ObstaclePlayerCollision extends BasicCollisionGroup {
             }
             
             
-            p1.setSpeed(4);
+            //p1.setSpeed(4);
         } 
         p1.fireCharacteristicsIsChanged();
     }
