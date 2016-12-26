@@ -17,16 +17,22 @@ import views.SpriteView;
  */
 public class ObstaclePlayerCollision extends BasicCollisionGroup {
         
+    /**
+     * Коллизия
+     * @param s1 - первый коллизирующий спрайт
+     * @param s2 - второй коллизирующиц спрайт
+     */
     @Override
     public void collided(Sprite s1, Sprite s2) {
         // получаем бота или игрока
         Particle p1 = ((SpriteView)s1).getParticle();//игрок
         Particle p2 = ((SpriteView)s2).getParticle();//прептствие
 
-        //p1.setSpeed(0);
+        //Отодвигаем игрока от препятсвия чтобы он не проходил через него
         s1.setX(s1.getOldX());
         s1.setY(s1.getOldY());
         
+        //вычисляем куда подвинуть частицу в случае проникновения в препятствие
         double O0_O2 = (double)(p1.getSize()/2+p2.getSize()/2);
         double O0_O1 = (double)(GameMath.distance((int)(s1.getX()),(int)(s1.getY()),(int)(s2.getX()),(int)(s2.getY())));
         if(O0_O1<=O0_O2){

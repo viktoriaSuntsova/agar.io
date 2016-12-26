@@ -17,6 +17,11 @@ import views.SpriteView;
  */
 public class AgarCollision extends BasicCollisionGroup {
     
+    /**
+     * Коллизия агара и его поедателя
+     * @param s1 - первый коллизирующий спрайт
+     * @param s2 - второй коллизирующиц спрайт
+     */
     @Override
     public void collided(Sprite s1, Sprite s2) {
         Particle p1 = ((SpriteView)s1).getParticle();

@@ -64,6 +64,11 @@ public class GameView extends Game {
     private String resultString = "";
     private String againString = "PRESS \"SPACE\" AND WILL START YOUR GAME!";
 
+    /**
+     * Добавиь игрока
+     * @param name - имя
+     * @param picture - изображение
+     */
     public void addPlayer(String name, String picture) {
         Particle _player = game.createPlayer(name);
         PlayerView pl = new PlayerView(_player);
@@ -72,6 +77,13 @@ public class GameView extends Game {
         player.add(pl);
     }
     
+    /**
+     * Установить настройки
+     * @param cAgar - кол-во агара
+     * @param cBot - кол-во ботов
+     * @param cObstacle -  кол-во препятсвий
+     * @param playerCreate - игрок
+     */
     public void setSettings(int cAgar, int cBot, int cObstacle, boolean playerCreate) {
         countAgar       = cAgar;
         countBot        = cBot;
@@ -79,6 +91,9 @@ public class GameView extends Game {
         isCreatePlayer  = playerCreate;
     }
 
+    /**
+     * Инициализация игры
+     */
     @Override
     public void initResources() {
         game.startGame(countAgar, countBot, countObstacle);

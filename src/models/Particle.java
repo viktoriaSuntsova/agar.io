@@ -56,22 +56,52 @@ public class Particle {
      */
     private Point position = null;
     
+    /**
+     * Шаги для задержки update
+     * @param _stepsUpdate
+     */
     public void stepsUpdate(int _stepsUpdate){
         stepsUpdate =_stepsUpdate;
     }
+
+    /**
+     * Получить Шаги для задержки update
+     * @return шаги
+     */
     public int getStepsUpdate(){
         return stepsUpdate;
     }
+
+    /**
+     * Добавить контроллер
+     * @param _cont - контроллер
+     */
     public void addController(Controller _cont){
         cont = _cont;
     }
+
+    /**
+     * Получить контроллер
+     * @return контрллер
+     */
     public Controller getController(){
         return cont;
     }
+
+    /**
+     * Создание частицы
+     * @param p - точка
+     */
     public Particle(Point p) {
         position = p;
     }
     
+    /**
+     * Создание частицы
+     * @param p - точка
+     * @param _type - тип
+     * @param _name - имя
+     */
     public Particle(Point p, String _type, String _name) {
         type = _type;
         position = p;
@@ -79,50 +109,101 @@ public class Particle {
             name = _name;
     }
 
+    /**
+     * Полчить позицию на поле
+     * @return позиция
+     */
     public Point getPosition() {
         return position;
     }
     
+    /**
+     * Утановить имя
+     * @param n - имя
+     */
     public void setName(String n) {
         name = n;
     }
     
+    /**
+     * Получить имя
+     * @return имя
+     */
     public String getName() {
         return name;
     }
     
+    /**
+     * Получить размер
+     * @return размер
+     */
     public int getSize() {
         return size;
     }
 
+    /**
+     * Установить размер
+     * @param _size - размер
+     */
     public void setSize(int _size) {
         size = _size;
     }
     
+    /**
+     * Установить угол
+     * @param _angle угол
+     */
     public void setAngle(int _angle) {
         angle = _angle;
     }
 
+    /**
+     * Получить угол
+     * @return угол
+     */
     public int getAngle() {
         return angle;
     }
     
+    /**
+     * Получить тип
+     * @return тип
+     */
     public String getType() {
         return type;
     }
     
+    /**
+     *
+     * @param x - координата Х
+     * @param y - координата У
+     * @param width - ширина
+     * @param height -длина
+     */
     public void setPosition(int x, int y, int width, int height) {
         position = new Point( x + width/2, y + height/2 );
     }
 
+    /**
+     * Полуить скорость
+     * @return скорость
+     */
     public double speed() {
         return speed;
     }
     
+    /**
+     * Установить скорость
+     * @param _speed скорость
+     */
     public void setSpeed(double _speed) {
         speed = _speed;
     }
     
+    /**
+     * Поглотить другую частицу
+     * @param p- другая частица
+     */
     public void swallow(Particle p) {
         int otherSize = p.getSize();
         double allSquare = 3.14*Math.pow(size, 2) + 3.14*Math.pow(otherSize, 2);
@@ -137,10 +218,18 @@ public class Particle {
     private ArrayList particleListenerList = new ArrayList();
     private GameListener gameListener = null;
 
+    /**
+     * Добавить слушателч игрока
+     * @param p - слушатель
+     */
     public void addPlayerActionListener(ParticleListener p) {
         particleListenerList.add(p);
     }
     
+    /**
+     * Добавить слушателей игры
+     * @param g - слушатель
+     */
     public void setGameListener( GameListener g ) {
         gameListener = g;
     }

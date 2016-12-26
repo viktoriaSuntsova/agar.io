@@ -18,17 +18,24 @@ import views.SpriteView;
  */
 public class ObstacleAICollision extends BasicCollisionGroup {
     
-    
+    /**
+     * Коллизия прептствия и ИИ
+     * @param s1 - первый коллизирующий спрайт
+     * @param s2 - второй коллизирующиц спрайт
+     */
     @Override
     public void collided(Sprite s1, Sprite s2) {
+        //получаем две частицы
         Particle p1 = ((SpriteView)s1).getParticle();
         Particle p2 = ((SpriteView)s2).getParticle();
-
+        
+        //получаем контроллер бактерии
         AIController ai = (AIController)p1.getController();
         int angle = p1.getAngle() - 180; 
         ai.setAngleForStep(angle);
         ai.setSteps((int)(10 + Math.random()*(30)));
         
+        //вычисляем куда подвинуть частицу в случае проникновения в препятствие
         double O0_O2 = (double)(p1.getSize()/2+p2.getSize()/2);
         double O0_O1 = (double)(GameMath.distance((int)(s1.getX()),(int)(s1.getY()),(int)(s2.getX()),(int)(s2.getY())));
         if(O0_O1<=O0_O2){

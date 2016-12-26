@@ -24,8 +24,8 @@ import models.Particle;
 public class PlayerView extends SpriteView {
     
     /**
-     *
-     * @param _particle
+     * Создать отображение для игрока
+     * @param _particle- чатсица
      */
     public PlayerView(Particle _particle) {
         particle = _particle;

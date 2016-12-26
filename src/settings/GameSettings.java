@@ -40,6 +40,9 @@ public class GameSettings extends com.golden.gamedev.funbox.GameSettings {
     
     GameView view = null;
     
+    /**
+     *Начать игру
+     */
     @Override
     public void start() {
         GameLoader game = new GameLoader();
@@ -57,6 +60,10 @@ public class GameSettings extends com.golden.gamedev.funbox.GameSettings {
         game.start();
     }
     
+    /**
+     * Настройки
+     * @return Панель настроек
+     */
     protected JPanel initSettings() {
         JPanel window = super.initSettings();
         jPanel1 = new javax.swing.JPanel();

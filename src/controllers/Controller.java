@@ -20,19 +20,37 @@ public class Controller {
     
     protected final int MIN_DITANCE = 500;
     
+    /**
+     * Создание контроллера
+     * @param _game
+     * @param _particle
+     */
     public Controller(GameModel _game, Particle _particle) {
         game = _game;
         particle = _particle;
     }
     
+    /**
+     * 
+     * @param mousePosition - позиция мыши
+     */
     public void update(Point mousePosition) {
         
     }
     
+    /**
+     * Получить частицу
+     * @return частица этого контрллера
+     */
     public Particle getParticle() {
         return particle;
     }
     
+    /**
+     * Установить коллизию
+     * @param angle угол
+     * @param mousePosition позиция мыши
+     */
     public void setCollision(int angle, Point mousePosition) {
         /*double angleCollision = GameMath.radiansToDegrees( GameMath.getAngleAtThreePoints(
                     particle.getPosition(), 
@@ -47,6 +65,11 @@ public class Controller {
         }*/
     }
     
+    /**
+     *
+     * @param mousePosition позиция мыши
+     * @return признак мы у границы
+     */
     public boolean checkGoOutBorder(Point mousePosition) {
         double x = particle.getPosition().getX(),
                 y = particle.getPosition().getY();

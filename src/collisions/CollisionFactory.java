@@ -14,6 +14,10 @@ import com.golden.gamedev.object.collision.BasicCollisionGroup;
 public class CollisionFactory {
     
     /**
+     * Создание коллизии
+     * @param first - тип первого элемента коллизии
+     * @param second - тип второго элемента коллизии
+     * @return - группа коллизии
      */
     public static BasicCollisionGroup createCollision (String first, String second) {
         BasicCollisionGroup collision = null;

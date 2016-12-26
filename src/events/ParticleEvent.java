@@ -13,14 +13,22 @@ import models.Particle;
  * @author 999
  */
 public class ParticleEvent extends EventObject {
-    
+    //частица
     Particle particle = null;
     
+    /**
+     * Установить событие
+     * @param o - объект 
+     */
     public ParticleEvent(Object o) {
         super(o);
         particle = (Particle)o;
     }
     
+    /**
+     * Получить событие
+     * @return частица
+     */
     public Particle getParticle() {
         return particle;
     }

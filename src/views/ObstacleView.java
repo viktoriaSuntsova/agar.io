@@ -15,6 +15,10 @@ import models.Particle;
  */
 public class ObstacleView extends SpriteView {
     
+    /**
+     * Создать отображение для препятствия
+     * @param _particle- чатсица
+     */
     public ObstacleView(Particle _particle) {
         particle = _particle;
         particle.setSize(100);

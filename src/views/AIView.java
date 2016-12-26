@@ -17,8 +17,8 @@ import models.Particle;
 public class AIView extends SpriteView {
 
     /**
-     *
-     * @param _particle
+     * Создание отображени для ИИ
+     * @param _particle -  частица
      */
     public AIView(Particle _particle) {
         particle = _particle;

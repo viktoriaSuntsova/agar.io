@@ -21,18 +21,40 @@ public class AIController extends Controller {
     public AIController(GameModel game, Particle particle) {
         super(game, particle);
     }
+    //шаги для остановки update
     private int stepCount = 0;
     private int stepObstacleCount = 0;
+    //Угол, по которому мы движемся пока сдерживаем update
     private int angleForStep;
+    
+    /**
+     *
+     * @param _stepCount - количество шагов для отбрасывания от препятствия
+     */
     public void setSteps(int _stepCount){
         stepObstacleCount = _stepCount;
     }
+    
+    /**
+     *
+     * @return количество шагов для отбрасывания от препятствия
+     */
     public int getObstacleSteps(){
         return stepObstacleCount;
     }
-     public int getSteps(){
+
+    /**
+     *
+     * @return количество шагов для отбрасывания
+     */
+    public int getSteps(){
         return stepCount;
     }
+
+    /**
+     *
+     * @param _angleForStep - угол по которому идем пока нет update
+     */
     public void setAngleForStep(int _angleForStep){
         angleForStep = _angleForStep;
     }
@@ -45,18 +67,18 @@ public class AIController extends Controller {
     }
     
     /**
-     * Базовая реализация лишь проверяет, что спрайт не вышел за поля
-     * @param mousePosition 
+     * Обновить направление
+     * @param mousePosition  -  позиция мыши
      */
     @Override
     public void update(Point mousePosition) {
+        //если есть шаги, за которые нужно не делать update
         if(stepObstacleCount==0){
             if(stepCount==0){
-                int angle = checkGoOutBorder();
+                int angle = checkGoOutBorder();// проверяем не вышли ли мы заграницу
                 if(angle!=-1){
-                    particle.setSpeed(3.0/particle.getSize());
-                    //particle.setSpeed(0.1);
-                    particle.setAngle(angle);
+                    particle.setSpeed(3.0/particle.getSize());//сообщаем скорость
+                    particle.setAngle(angle);//сообщаем угол
                     particle.fireCharacteristicsIsChanged();
                     angleForStep = angle;
                     stepCount = (int)(10 + Math.random()*(30));
@@ -144,6 +166,13 @@ public class AIController extends Controller {
         }
     }
     
+    /**
+     * Выбрать цель
+     * @param smallOne - бактерия меньше нас
+     * @param bigOne - бактерия больше нас
+     * @param agar - агар
+     * @return
+     */
     public Priority chooseParticle(Particle smallOne, Particle bigOne, Particle agar){
         Priority priority = Priority.SMALL_ONE;
         //Если на поле вообще нет больше меня и меньше меня
@@ -186,8 +215,12 @@ public class AIController extends Controller {
         return priority;
     }
     
-    // !TODO Вынести получение ботов и игроков в общий файл, и передавать как параметр
-    // что бы он по три раза не перебирал и не копировал массив
+    /**
+     * Найти ближайшую меньшую частицу
+     * @param particlAround - список бактерий вокруг
+     * @param players - список игроков
+     * @return
+     */
     public Particle findNearestSmallerParticle(ArrayList<Particle> particlAround, ArrayList<Particle> players) {
         particlAround.addAll(players);
         double distToP;
@@ -203,9 +236,12 @@ public class AIController extends Controller {
         return nearestP;
     }
     
-    
-    // !TODO Вынести получение ботов и игроков в общий файл, и передавать как параметр
-    // что бы он по три раза не перебирал и не копировал массив
+    /**
+     * Найти ближайшую бОльшую частицу
+     * @param particlAround - список бактерий вокруг
+     * @param players - список игроков
+     * @return
+     */
     public Particle findNearestBiggerParticle(ArrayList<Particle> particlAround, ArrayList<Particle> players) {
         particlAround.addAll(players);
         double distToP;
@@ -221,8 +257,10 @@ public class AIController extends Controller {
         return nearestP;
     }
     
-    
-    // !TODO Здесь можно оставить
+    /**
+     *
+     * @return ближайший агар
+     */
     public Particle findNearestAgar(){
         ArrayList<Particle> agars = game.get("agar");
         double distToP;
@@ -237,22 +275,28 @@ public class AIController extends Controller {
         return nearestP;
     }
     
+    /**
+     * Установить коллизию
+     * @param angle - угол
+     */
     public void setCollision(int angle) {
             particle.setAngle(angle);
             particle.setSpeed(0.1);
         
     }
     
+    /**
+     * Посмотреть границу
+     * @return угол по которому отходим от границы
+     */
     public int checkGoOutBorder() {
         double x = particle.getPosition().getX(),
                 y = particle.getPosition().getY();
         if(x > game.getSize().getWidth() ){ 
             return (int)(100 + Math.random()*(160));
-            //return 180;
         }
         else if(y > game.getSize().getHeight()){
             return (int)(190 + Math.random()*(160));
-            //return 270;
         }
         else if(x < 0){
             ArrayList<Integer> n = new ArrayList<Integer>();
@@ -260,11 +304,9 @@ public class AIController extends Controller {
             n.add((int)(280 + Math.random()*(80)));
             int i = (int)(Math.random());
             return n.get(i);
-            //return 0;
         }
         else if(y < 0){
             return (int)(10 + Math.random()*(160));
-            //return 90;
         }
         return -1;
     }

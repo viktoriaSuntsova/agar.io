@@ -16,6 +16,10 @@ import models.Particle;
  */
 public class AgarView extends SpriteView {
     
+    /**
+     * Создать отображение для агара
+     * @param _particle- чатсица
+     */
     public AgarView(Particle _particle) {
         Random r = new Random();
         particle = _particle;

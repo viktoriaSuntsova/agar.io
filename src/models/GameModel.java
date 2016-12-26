@@ -70,6 +70,10 @@ public class GameModel {
     // счетчик частиц разного типа
     private Counter counter = new Counter();
     Timer timer = new Timer(1000, new ActionListener() {
+        /**
+        * 
+        * @param e событие
+        */
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -80,11 +84,22 @@ public class GameModel {
         }
     });
     
+    /**
+     * Создание модели
+     * @param maxWidth - ширина
+     * @param maxHeight - высота
+     */
     public GameModel(int maxWidth, int maxHeight) {
         WIDTH = maxWidth;
         HEIGHT = maxHeight;
     }
     
+    /**
+     * Начать игру
+     * @param agarCount - количество агара
+     * @param botsCount - количество ботов
+     * @param obstacleCount - количество препятсвий
+     */
     public void startGame(int agarCount, int botsCount, int obstacleCount) {
         for(int i = 0; i < agarCount; i++) {
             createAgar();
@@ -98,12 +113,18 @@ public class GameModel {
         timer.start();
     }
     
+    /**
+     * Обновить игру
+     * @param mousePosition - позиция мыши
+     */
     public void updateGame(Point mousePosition) {
         for(int i = 0; i < controllers.size(); i++) {
             controllers.get(i).update(mousePosition);
         }
     }
-    
+    /**
+     * Создать новые частицы вместо съеденных
+     */
     private void recreateParticles() throws InterruptedException {
         for(int i = countParticles("agar"); i < agarCount; i++) {
             Particle p = createAgar();
@@ -114,7 +135,10 @@ public class GameModel {
             fireGeneratedBot(p);
         }
     }
-    
+    /**
+     * Определить позицию
+     * @return позиция
+     */
     private Point determinePosition() {
         Random r = new Random();
         boolean isNewPoint = false;
@@ -141,6 +165,11 @@ public class GameModel {
         return point;
     }
     
+    /**
+     * Создать игрока
+     * @param name - имя
+     * @return частица
+     */
     public Particle createPlayer(String name) {
         Particle particle = new Particle(determinePosition(), "player", name);
         particles.add( particle );
@@ -148,6 +177,10 @@ public class GameModel {
         return particle;
     }
     
+    /**
+     * Создать бота
+     * @return частица
+     */
     public Particle createBot() {
         Particle particle = new Particle(determinePosition(), "bot", "bot_" + counter.get("bot"));
         particles.add( particle );
@@ -157,18 +190,31 @@ public class GameModel {
         return particle; 
     }
     
+    /**
+     * Создать агар
+     * @return частица 
+     */
     public Particle createAgar() {
         Particle particle = new Particle(determinePosition(), "agar", "agar_" + counter.get("agar"));
         particles.add( particle );
         return particle; 
     }
     
+    /**
+     * Создать препятствие
+     * @return частица
+     */
     public Particle createObstacle() {
         Particle particle = new Particle(determinePosition(), "obstacle", "obstacle_" + counter.get("obstacle"));
         particles.add( particle );
         return particle; 
     }
     
+    /**
+     * Получить список частиц
+     * @param type- тип частиц
+     * @return список частиц
+     */
     public ArrayList<Particle> get(String type) {
         ArrayList<Particle> typeParticles = new ArrayList<>();
         ArrayList<Particle> cloneParticles = (ArrayList<Particle>) particles.clone();
@@ -179,10 +225,18 @@ public class GameModel {
         return typeParticles;
     }
     
+    /**
+     * Получиь размер
+     * @return размер
+     */
     public Dimension getSize() {
         return new Dimension(WIDTH, HEIGHT);
     }
     
+    /**
+     * Удалить частицу
+     * @param p - частца
+     */
     public void removeParticle(Particle p) {
         particles.remove(p);
         for( Controller c : controllers ) {
@@ -193,6 +247,11 @@ public class GameModel {
         }
     }
     
+    /**
+     * Количество частиц
+     * @param type - тип частицы
+     * @return количество частиц
+     */
     public int countParticles(String type) {
         int count = 0;
         for(Particle p : particles) {
@@ -204,10 +263,18 @@ public class GameModel {
     
     private GameListener gameListener = null;
     
+    /**
+     * Установить слушателя
+     * @param g - слушатель
+     */
     public void setGameListener( GameListener g ) {
         gameListener = g;
     }
     
+    /**
+     *
+     * @param p частица
+     */
     public void fireGeneratedAgar(Particle p) {
         GameEvent e = new GameEvent();
         e.setParticle(p);

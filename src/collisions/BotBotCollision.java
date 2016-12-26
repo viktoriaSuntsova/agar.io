@@ -17,6 +17,11 @@ import views.SpriteView;
  */
 public class BotBotCollision extends BasicCollisionGroup {
 
+    /**
+     * Коллизия ИИ и ИИ
+     * @param s1 - первый коллизирующий спрайт
+     * @param s2 - второй коллизирующиц спрайт
+     */
     @Override
     public void collided(Sprite s1, Sprite s2) {
         boolean firstBigest = ((SpriteView)s1).getParticle().getSize() > ((SpriteView)s2).getParticle().getSize();

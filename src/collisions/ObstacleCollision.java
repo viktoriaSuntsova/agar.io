@@ -16,6 +16,11 @@ import views.SpriteView;
  */
 public class ObstacleCollision extends BasicCollisionGroup {
         
+    /**
+     * Коллизия
+     * @param s1 - первый коллизирующий спрайт
+     * @param s2 - второй коллизирующиц спрайт
+     */
     @Override
     public void collided(Sprite s1, Sprite s2) {
         // получаем бота или игрока

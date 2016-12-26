@@ -27,8 +27,8 @@ public class PlayerController extends Controller {
     }
     
     /**
-     * Базовая реализация лишь проверяет, что спрайт не вышел за поля
-     * @param mousePosition 
+     * 
+     * @param mousePosition позиция мыши
      */
     @Override
     public void update(Point mousePosition) {
@@ -47,7 +47,11 @@ public class PlayerController extends Controller {
         setSpeed(distance, radiusParticle);
         particle.fireCharacteristicsIsChanged();
     }
-    
+    /**
+     * 
+     * @param distance дистанция до чстицы
+     * @param radiusParticle радиус частицы
+     */
     private void setSpeed(double distance, int radiusParticle) {
         if( distance < radiusParticle*0.2 ) {
             particle.setSpeed(0);
@@ -57,7 +61,10 @@ public class PlayerController extends Controller {
             particle.setSpeed(12.0/particle.getSize());
         }
     }
-    
+    /**
+     *
+     * @param mousePosition позиция мыши
+     */
     @Override
     public boolean checkGoOutBorder(Point mousePosition) {
         double x = particle.getPosition().getX(),

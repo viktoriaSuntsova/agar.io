@@ -79,6 +79,13 @@ public class GameMath {
         return new Point(newX, newY);
     }
     
+    /**
+     * Получить уголпо трем точкам
+     * @param A - точка А
+     * @param B -точка В
+     * @param C - точка С
+     * @return - угол в радианах
+     */
     public static double getAngleAtThreePoints(Point A, Point B, Point C) {
         double ab = GameMath.distance(A, B),
                 bc = GameMath.distance(B, C),
@@ -87,6 +94,13 @@ public class GameMath {
         return cos;
     }
     
+    /**
+     * 
+     * @param A - точка А
+     * @param B - точка В
+     * @param O - точка О
+     * @return
+     */
     public static int pointToLine(Point A, Point B, Point O) {
         double k = (A.getY() - B.getY()) / (A.getX() - B.getX()),
                 b = (B.getX() * A.getY() - A.getX()*B.getY())/(B.getX() - A.getX());

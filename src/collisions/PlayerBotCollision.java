@@ -19,6 +19,12 @@ public class PlayerBotCollision extends BasicCollisionGroup {
         
     // Этот вид коллизия для игрока с ботом и для бота с игроком (((
     // первый всегда игрок, второй всегда бот
+
+    /**
+     * Коллизия
+     * @param s1 - первый коллизирующий спрайт
+     * @param s2 - второй коллизирующиц спрайт
+     */
     @Override
     public void collided(Sprite s1, Sprite s2) {
         boolean firstBigest = ((SpriteView)s1).getParticle().getSize() > ((SpriteView)s2).getParticle().getSize();
