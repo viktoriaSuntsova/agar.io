@@ -6,8 +6,6 @@
 package settings;
 
 import events.GameListener;
-import events.ParticleEvent;
-import events.ParticleListener;
 import java.awt.FileDialog;
 import java.awt.Image;
 import java.io.File;

@@ -6,6 +6,7 @@
 package events;
 
 import java.util.EventListener;
+import models.Particle;
 
 /**
  *
@@ -15,13 +16,11 @@ public interface GameListener extends EventListener {
     
     public void AteParticle();
     
-    public void ParticleDied(GameEvent e);
+    public void ParticleDied(Particle p);
     
-    public void generatedAgar(GameEvent e);
+    public void generatedAgar(Particle p);
     
-    public void generatedBot(GameEvent e);
-    
-    public void generatedPlayer(GameEvent e);
+    public void generatedBot(Particle p);
     
     public void createNewPlayer(String name, String ava);
     

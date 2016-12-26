@@ -6,7 +6,6 @@
 package models;
 
 import controllers.*;
-import events.GameEvent;
 import events.GameListener;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -276,24 +275,13 @@ public class GameModel {
      * @param p частица
      */
     public void fireGeneratedAgar(Particle p) {
-        GameEvent e = new GameEvent();
-        e.setParticle(p);
         if( gameListener != null )
-            gameListener.generatedAgar(e);
+            gameListener.generatedAgar(p);
     }
     
     public void fireGeneratedBot(Particle p) {
-        GameEvent e = new GameEvent();
-        e.setParticle(p);
         if( gameListener != null )
-            gameListener.generatedBot(e);
-    }
-    
-    public void fireGeneratedPlayer(Particle p) {
-        GameEvent e = new GameEvent();
-        e.setParticle(p);
-        if( gameListener != null )
-            gameListener.generatedPlayer(e);
+            gameListener.generatedBot(p);
     }
     
 }

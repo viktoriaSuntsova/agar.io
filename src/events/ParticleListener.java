@@ -6,6 +6,7 @@
 package events;
 
 import java.util.EventListener;
+import models.Particle;
 
 /**
  *
@@ -13,8 +14,8 @@ import java.util.EventListener;
  */
 public interface ParticleListener extends EventListener {
     
-    public void CharacteristicsIsChanged(ParticleEvent p);
+    public void CharacteristicsIsChanged(Particle p);
     
-    public void ParticleIncreased(ParticleEvent p);
+    public void ParticleIncreased(Particle p);
     
 }

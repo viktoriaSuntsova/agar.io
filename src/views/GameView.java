@@ -8,7 +8,6 @@ package views;
 import settings.PlayerSettings;
 import collisions.*;
 import com.golden.gamedev.Game;
-import com.golden.gamedev.funbox.GameSettings;
 import com.golden.gamedev.object.GameFont;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.SpriteGroup;
@@ -23,7 +22,7 @@ import models.Particle;
 
 /**
  *
- * @author 999
+ * @author Ivan
  */
 public class GameView extends Game {
     
@@ -229,8 +228,7 @@ public class GameView extends Game {
     protected class GameObserver implements GameListener{
 
         @Override
-        public void ParticleDied(GameEvent e) {
-            Particle p = e.getParticle();
+        public void ParticleDied(Particle p) {
             game.removeParticle(p);
             agarParticles.removeInactiveSprites();
             SpriteGroup sg = field.getGroup(p.getName());
@@ -247,15 +245,15 @@ public class GameView extends Game {
         }
 
         @Override
-        public void generatedAgar(GameEvent e) {
-            AgarView agar = new AgarView(e.getParticle());
+        public void generatedAgar(Particle p) {
+            AgarView agar = new AgarView(p);
             agar.particle.setGameListener(new GameObserver());
             agarParticles.add(agar);
         }
 
         @Override
-        public void generatedBot(GameEvent e) {
-            AIView ai = new AIView( e.getParticle() );
+        public void generatedBot(Particle p) {
+            AIView ai = new AIView(p);
             ai.particle.setGameListener(new GameObserver());
             SpriteGroup aiGroup = new SpriteGroup(ai.particle.getName());
             aiGroup.add(ai);
@@ -266,10 +264,6 @@ public class GameView extends Game {
             field.addCollisionGroup(aiGroup, obstacleParticles, new ObstacleAICollision());
             for(SpriteGroup group : enemies)
                 field.addCollisionGroup(aiGroup, group, new BotBotCollision());
-        }
-
-        @Override
-        public void generatedPlayer(GameEvent e) {
         }
 
         @Override

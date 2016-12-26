@@ -6,7 +6,6 @@
 package views;
 
 import com.golden.gamedev.object.*;
-import events.ParticleEvent;
 import events.ParticleListener;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -121,12 +120,12 @@ public class SpriteView extends Sprite {
     protected class ParticleObserver implements ParticleListener{
 
         @Override
-        public void CharacteristicsIsChanged(ParticleEvent p) {
-            setSpeed( p.getParticle().getAngle());
+        public void CharacteristicsIsChanged(Particle p) {
+            setSpeed( p.getAngle());
         }
 
         @Override
-        public void ParticleIncreased(ParticleEvent p) {
+        public void ParticleIncreased(Particle p) {
             repaint();
         }
     }

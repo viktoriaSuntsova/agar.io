@@ -235,24 +235,20 @@ public class Particle {
     }
     
     public void fireCharacteristicsIsChanged() {
-        ParticleEvent e = new ParticleEvent(this);
         for (Object listener : particleListenerList){
-            ((ParticleListener)listener).CharacteristicsIsChanged(e);
+            ((ParticleListener)listener).CharacteristicsIsChanged(this);
         }
     }
     
     public void fireParticleIsIncrease() {
-        ParticleEvent e = new ParticleEvent(this);
         for (Object listener : particleListenerList){
-            ((ParticleListener)listener).ParticleIncreased(e);
+            ((ParticleListener)listener).ParticleIncreased(this);
         }
     }
     
     public void fireParticleDied() {
-        GameEvent e = new GameEvent();
-        e.setParticle(this);
         if( gameListener != null )
-            gameListener.ParticleDied(e);
+            gameListener.ParticleDied(this);
     }
     
     public void fireAteParticle() {
