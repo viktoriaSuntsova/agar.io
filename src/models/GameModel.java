@@ -6,7 +6,7 @@
 package models;
 
 import controllers.*;
-import events.GameListener;
+import events.GeneratedListener;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -260,13 +260,13 @@ public class GameModel {
         return count;
     }
     
-    private GameListener gameListener = null;
+    private GeneratedListener gameListener = null;
     
     /**
      * Установить слушателя
      * @param g - слушатель
      */
-    public void setGameListener( GameListener g ) {
+    public void setGameListener( GeneratedListener g ) {
         gameListener = g;
     }
     

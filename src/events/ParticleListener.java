@@ -10,12 +10,20 @@ import models.Particle;
 
 /**
  *
- * @author 999
+ * @author Ivan
  */
 public interface ParticleListener extends EventListener {
     
+    /** Характеристики частицы увеличились
+     *
+     * @param p текущая частица
+     */
     public void CharacteristicsIsChanged(Particle p);
     
+    /** Частица увеличилась
+     *
+     * @param p текущая частица
+     */
     public void ParticleIncreased(Particle p);
     
 }

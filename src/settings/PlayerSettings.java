@@ -5,7 +5,7 @@
  */
 package settings;
 
-import events.GameListener;
+import events.SettingsListener;
 import java.awt.FileDialog;
 import java.awt.Image;
 import java.io.File;
@@ -225,14 +225,14 @@ public class PlayerSettings extends javax.swing.JDialog {
     private javax.swing.JTextField name;
     // End of variables declaration//GEN-END:variables
     
-    private GameListener gameListener = null;
+    private SettingsListener gameListener = null;
     
-    public void setGameListener( GameListener g ) {
+    public void setGameListener( SettingsListener g ) {
         gameListener = g;
     }
     
     public void fireCreateNewPlayer() {
-        ((GameListener)gameListener).createNewPlayer(playerName, playerAva);
+        gameListener.createNewPlayer(playerName, playerAva);
     }
     
 

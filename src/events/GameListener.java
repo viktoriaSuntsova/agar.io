@@ -10,18 +10,19 @@ import models.Particle;
 
 /**
  *
- * @author 999
+ * @author Ivan
  */
 public interface GameListener extends EventListener {
     
+    /** Съел частицу
+     *
+     */
     public void AteParticle();
     
+    /** Частица была съедена
+     *
+     * @param p съеденная частица
+     */
     public void ParticleDied(Particle p);
-    
-    public void generatedAgar(Particle p);
-    
-    public void generatedBot(Particle p);
-    
-    public void createNewPlayer(String name, String ava);
     
 }

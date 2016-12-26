@@ -96,7 +96,7 @@ public class GameView extends Game {
     @Override
     public void initResources() {
         game.startGame(countAgar, countBot, countObstacle);
-        game.setGameListener(new GameObserver());
+        game.setGameListener(new GeneratedObserver());
         
         
         font  = fontManager.getFont(getImage("libs/font.fnt"));
@@ -122,7 +122,7 @@ public class GameView extends Game {
         field.setBackground(bg);
         
         settings = new PlayerSettings();
-        settings.setGameListener(new GameObserver());
+        settings.setGameListener(new SettingsObserver());
         if(!isCreatePlayer) {
             settings.setVisible(true);
         }
@@ -225,7 +225,7 @@ public class GameView extends Game {
         return new Dimension(WIDTH, HEIGHT);
     }
     
-    protected class GameObserver implements GameListener{
+    protected class GameObserver implements GameListener {
 
         @Override
         public void ParticleDied(Particle p) {
@@ -243,6 +243,14 @@ public class GameView extends Game {
                 settings.setVisible(true);
             }
         }
+
+        @Override
+        public void AteParticle() {
+            AteParticles = AteParticles == -1 ? 0 : (AteParticles + 1);
+        }
+    }
+    
+    protected class GeneratedObserver implements GeneratedListener {
 
         @Override
         public void generatedAgar(Particle p) {
@@ -265,11 +273,9 @@ public class GameView extends Game {
             for(SpriteGroup group : enemies)
                 field.addCollisionGroup(aiGroup, group, new BotBotCollision());
         }
-
-        @Override
-        public void AteParticle() {
-            AteParticles = AteParticles == -1 ? 0 : (AteParticles + 1);
-        }
+    }
+    
+    protected class SettingsObserver implements SettingsListener {
 
         @Override
         public void createNewPlayer(String name, String ava) {
