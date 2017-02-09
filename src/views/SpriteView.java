@@ -40,7 +40,7 @@ public class SpriteView extends Sprite {
      *Отрисовка
      */
     protected void repaint() {
-        image = image.isEmpty() ? "img/" + particle.getType() + ".png" : image;
+        image = image.isEmpty() ? "/img/" + particle.getType() + ".png" : image;
         BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(), BufferedImage.TYPE_INT_ARGB);
         if (color != null) {
             // Зарисовать площадь нужным цветом
@@ -49,9 +49,10 @@ public class SpriteView extends Sprite {
             g2d.drawOval(0, 0, bi.getWidth(), bi.getHeight());
             if( !particle.getType().isEmpty() ) {
                 try {
-                    File newImage = new File(image);
+                    //image;
+                    String absolutePath = (new File(".")).getAbsolutePath();
+                    File newImage = new File(absolutePath + image);
                     if(!newImage.isFile()) {
-                        System.err.println("The file: " + image + " - not found!");
                         return;
                     }
                     //Взять картинку и задать ей нужный размер

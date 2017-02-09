@@ -11,5 +11,7 @@
 hs_err_pid*
 /build/
 /dist/
+/nbproject/
 /.git-rewrite/t/nbproject/private/
 /.git-rewrite/t/dist/
+*.xml
