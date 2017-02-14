@@ -9,7 +9,7 @@ import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.collision.BasicCollisionGroup;
 import models.Particle;
 import models.GameMath;
-import views.SpriteView;
+import views.gtge.SpriteView;
 
 /**
  *

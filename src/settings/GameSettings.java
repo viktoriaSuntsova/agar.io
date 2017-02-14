@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import views.GameView;
+import views.gtge.GameView;
 
 /**
  *

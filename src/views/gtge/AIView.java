@@ -3,27 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package views.gtge;
 
 import com.golden.gamedev.object.SpriteGroup;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import models.Particle;
 
 /**
  *
  * @author 999
  */
-public class ObstacleView extends SpriteView {
-    
+public class AIView extends SpriteView {
+
     /**
-     * Создать отображение для препятствия
-     * @param _particle- чатсица
+     * Создание отображени для ИИ
+     * @param _particle -  частица
      */
-    public ObstacleView(Particle _particle) {
+    public AIView(Particle _particle) {
         particle = _particle;
-        particle.setSize(100);
-        setColor(Color.GRAY);
         setSpeed(0);
+        setColor(Color.RED);
         setPosition(particle.getPosition());
+        particle.addPlayerActionListener(new ParticleObserver());
     }
+    
 }
