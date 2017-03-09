@@ -15,3 +15,7 @@ hs_err_pid*
 /.git-rewrite/t/nbproject/private/
 /.git-rewrite/t/dist/
 *.xml
+/engines/gtge/nbproject/private/
+/engines/libGDX.engine/nbproject/private/
+/engines/gtge/dist/
+/engines/gtge/build/
