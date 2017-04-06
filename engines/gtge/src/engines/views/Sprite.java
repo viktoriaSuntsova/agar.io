@@ -6,8 +6,7 @@
 package engines.views;
 
 /**
- *
- * @author homepc
+ * Стандартный спрайт игры
  */
 public class Sprite extends com.golden.gamedev.object.Sprite {
     

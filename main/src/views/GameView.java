@@ -9,7 +9,6 @@ import settings.PlayerSettings;
 import collisions.*;
 import events.*;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import models.GameModel;

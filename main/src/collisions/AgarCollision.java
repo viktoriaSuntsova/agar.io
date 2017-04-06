@@ -12,8 +12,7 @@ import models.Particle;
 import views.SpriteView;
 
 /**
- *
- * @author 999
+ * Коллизия спрайтов и агаров
  */
 public class AgarCollision extends BasicCollision {
     

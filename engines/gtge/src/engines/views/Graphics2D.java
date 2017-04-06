@@ -6,8 +6,7 @@
 package engines.views;
 
 /**
- *
- * @author homepc
+ * Графический контекст для рисования
  */
 public class Graphics2D {
     

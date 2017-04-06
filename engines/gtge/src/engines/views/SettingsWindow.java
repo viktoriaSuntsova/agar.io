@@ -5,13 +5,15 @@
  */
 package engines.views;
 
+import com.golden.gamedev.funbox.GameSettings;
+
 /**
- * Стандартная группа спрайтов
+ * Начальные настройки игры
  */
-public class SpriteGroup extends com.golden.gamedev.object.SpriteGroup {
-    
-    public SpriteGroup(String string) {
-        super(string);
+public class SettingsWindow extends GameSettings {
+
+    @Override
+    public void start() {
     }
     
 }

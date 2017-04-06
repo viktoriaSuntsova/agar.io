@@ -12,8 +12,7 @@ import models.Particle;
 import views.SpriteView;
 
 /**
- *
- * @author 999
+ * Коллизия между игроком и ботом
  */
 public class PlayerBotCollision extends BasicCollision {
         

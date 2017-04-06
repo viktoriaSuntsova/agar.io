@@ -12,8 +12,7 @@ import models.GameMath;
 import views.SpriteView;
 
 /**
- *
- * @author 999
+ * Коллизия между препятствием и игроком
  */
 public class ObstaclePlayerCollision extends BasicCollision {
         

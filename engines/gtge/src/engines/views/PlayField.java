@@ -6,8 +6,7 @@
 package engines.views;
 
 /**
- *
- * @author homepc
+ * Поле игры
  */
 public class PlayField extends com.golden.gamedev.object.PlayField {
 

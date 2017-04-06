@@ -13,8 +13,7 @@ import models.Particle;
 import views.SpriteView;
 
 /**
- *
- * @author Viktoria
+ * Коллизия между препятствием и ботом
  */
 public class ObstacleAICollision extends BasicCollision {
     

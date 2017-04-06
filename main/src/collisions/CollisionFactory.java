@@ -5,12 +5,10 @@
  */
 package collisions;
 
-import engines.views.Sprite;
 import engines.views.BasicCollision;
 
 /**
- *
- * @author 999
+ * Фабрика генерирующая коллизии
  */
 public class CollisionFactory {
     

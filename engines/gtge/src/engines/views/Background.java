@@ -8,9 +8,8 @@ package engines.views;
 import com.golden.gamedev.object.background.TileBackground;
 import java.awt.image.BufferedImage;
 
-/**
- *
- * @author homepc
+/** 
+ * Фон для игры
  */
 public class Background extends TileBackground {
 

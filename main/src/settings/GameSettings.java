@@ -5,8 +5,7 @@
  */
 package settings;
 
-import com.golden.gamedev.GameLoader;
-import events.GameListener;
+import engines.views.GameLoader;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Image;
@@ -23,10 +22,10 @@ import javax.swing.JPanel;
 import views.GameView;
 
 /**
- *
- * @author 999
+ * Инициализация настроек игры
+ * 
  */
-public class GameSettings extends com.golden.gamedev.funbox.GameSettings {
+public class GameSettings extends engines.views.SettingsWindow {
     
     private static int CountBot = 10;
     private static int CountAgar = 50;

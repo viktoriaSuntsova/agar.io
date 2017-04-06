@@ -9,8 +9,7 @@ import com.golden.gamedev.object.collision.BasicCollisionGroup;
 import com.golden.gamedev.object.Sprite;
 
 /**
- *
- * @author homepc
+ * Базовая коллизия для спрайтов
  */
 public class BasicCollision extends BasicCollisionGroup {
 

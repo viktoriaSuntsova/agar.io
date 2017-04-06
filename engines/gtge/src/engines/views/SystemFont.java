@@ -9,8 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 /**
- *
- * @author homepc
+ * Системный шрифт
  */
 public class SystemFont extends com.golden.gamedev.object.font.SystemFont {
     
