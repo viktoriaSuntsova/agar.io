@@ -9,10 +9,7 @@ package engines.views;
  *
  * @author homepc
  */
-public class SpriteGroup extends com.golden.gamedev.object.SpriteGroup {
-    
-    public SpriteGroup(String string) {
-        super(string);
-    }
+public class PlayField extends com.golden.gamedev.object.PlayField {
+
     
 }

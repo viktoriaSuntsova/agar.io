@@ -9,6 +9,6 @@ package engines.views;
  *
  * @author homepc
  */
-public class Sprite {
+public class Sprite extends com.golden.gamedev.object.Sprite {
     
 }

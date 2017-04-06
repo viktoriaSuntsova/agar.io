@@ -5,14 +5,17 @@
  */
 package engines.views;
 
+import java.awt.Color;
+import java.awt.Font;
+
 /**
  *
  * @author homepc
  */
-public class SpriteGroup extends com.golden.gamedev.object.SpriteGroup {
+public class SystemFont extends com.golden.gamedev.object.font.SystemFont {
     
-    public SpriteGroup(String string) {
-        super(string);
+    public SystemFont(Font font, Color color) {
+        super(font, color);
     }
     
 }

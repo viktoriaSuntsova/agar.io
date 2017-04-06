@@ -9,10 +9,16 @@ package engines.views;
  *
  * @author homepc
  */
-public class SpriteGroup extends com.golden.gamedev.object.SpriteGroup {
+public class Graphics2D {
     
-    public SpriteGroup(String string) {
-        super(string);
+    java.awt.Graphics2D m_g;
+    
+    public Graphics2D(java.awt.Graphics2D g) {
+        m_g = g;
     }
+    
+    public java.awt.Graphics2D get() {
+        return m_g;
+    } 
     
 }
