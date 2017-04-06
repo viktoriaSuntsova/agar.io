@@ -5,7 +5,8 @@
  */
 package collisions;
 
-import com.golden.gamedev.object.collision.BasicCollisionGroup;
+import engines.views.Sprite;
+import engines.views.BasicCollision;
 
 /**
  *
@@ -19,11 +20,13 @@ public class CollisionFactory {
      * @param second - тип второго элемента коллизии
      * @return - группа коллизии
      */
-    public static BasicCollisionGroup createCollision (String first, String second) {
-        BasicCollisionGroup collision = null;
+    public static BasicCollision createCollision (String first, String second) {
+        BasicCollision collision = null;
         switch(second) {
             case "bot":
-                collision = first.equals("bot") ? new BotBotCollision(): new PlayerBotCollision();
+                collision = first.equals("bot") 
+                        ? new BotBotCollision()
+                        : new PlayerBotCollision();
             break;
             case "agar":
                 collision = new AgarCollision();

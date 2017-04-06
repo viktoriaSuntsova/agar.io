@@ -5,18 +5,18 @@
  */
 package collisions;
 
-import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.collision.BasicCollisionGroup;
+import engines.views.Sprite;
+import engines.views.BasicCollision;
 import controllers.AIController;
 import models.GameMath;
 import models.Particle;
-import views.gtge.SpriteView;
+import views.SpriteView;
 
 /**
  *
  * @author Viktoria
  */
-public class ObstacleAICollision extends BasicCollisionGroup {
+public class ObstacleAICollision extends BasicCollision {
     
     /**
      * Коллизия прептствия и ИИ

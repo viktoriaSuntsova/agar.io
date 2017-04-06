@@ -5,16 +5,16 @@
  */
 package collisions;
 
-import com.golden.gamedev.object.Sprite;
-import com.golden.gamedev.object.collision.BasicCollisionGroup;
+import engines.views.Sprite;
+import engines.views.BasicCollision;
 import models.Particle;
-import views.gtge.SpriteView;
+import views.SpriteView;
 
 /**
  *
  * @author 999
  */
-public class ObstacleCollision extends BasicCollisionGroup {
+public class ObstacleCollision extends BasicCollision {
         
     /**
      * Коллизия
