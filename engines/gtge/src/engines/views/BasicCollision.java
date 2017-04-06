@@ -21,7 +21,7 @@ public class BasicCollision extends BasicCollisionGroup {
     
     @Override
     public void collided(Sprite sprite, Sprite sprite1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        collided((engines.views.Sprite)sprite, (engines.views.Sprite)sprite1);
     }
     
     public void setCollisionGroup(SpriteGroup s1, SpriteGroup s2) {

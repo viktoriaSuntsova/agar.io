@@ -17,6 +17,10 @@ public class Background extends TileBackground {
     public Background(BufferedImage[] bis, int[][] ints) {
         super(bis, ints);
     }
+    
+    public void render(Graphics2D g) {
+        super.render(g.get());
+    }
 
     /**
      * Возвращает позицию X смещения фона

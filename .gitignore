@@ -19,3 +19,6 @@ hs_err_pid*
 /engines/libGDX.engine/nbproject/private/
 /engines/gtge/dist/
 /engines/gtge/build/
+/main/dist/
+/engines/libGDX.engine/dist/
+/engines/libGDX.engine/build/

@@ -134,26 +134,14 @@ public class GameView extends engines.views.GameView {
         field.update(l);
     }
     
-    @Override
-    public void render(Graphics2D g) {
-        bg.render(g);
+    public void renderInContext(engines.views.Graphics2D g) {
+        bg.render(g);                       
         field.render(g);
+        //fnt.drawString(g, "Agar collected: " + String.valueOf(this.agarCollected), 20, 20);
         PlayerView player = (PlayerView) this.player.getActiveSprite();
-        if (player != null) {
+        if (player != null)
+        {
             bg.setToCenter(player);
-        }
-        String draw = "YOU ATE " + AteParticles + " PARTICLES";
-        String namePlayer = player == null ? "DO YOU WANT CONNETION?" : "YOUR NAME " 
-                + player.particle.getName().toUpperCase();
-        font.drawString(g, namePlayer, 9, 9);
-        font.drawString(g, draw, 9, 30);
-        
-        if(player == null) {
-            font.drawString(g, resultString, 240, 250);
-            font.drawString(g, againString, 180, 300);
-        } else {
-            font.drawString(g, "", 180, 200);
-            font.drawString(g, "", 180, 300);
         }
     }
     
