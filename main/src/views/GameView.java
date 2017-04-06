@@ -14,6 +14,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import models.GameModel;
 import models.Particle;
+import engines.views.PlayField;
+import engines.views.SpriteGroup;
+import engines.views.Background;
+import engines.views.SystemFont;
 
 /**
  *
@@ -31,7 +35,7 @@ public class GameView extends engines.views.GameView {
     /**
      * Фон игры
      */
-    private TileBackground bg = null;
+    private Background bg = null;
     
     
     private final GameModel game = new GameModel(WIDTH, HEIGHT);
@@ -50,8 +54,8 @@ public class GameView extends engines.views.GameView {
     
     PlayerSettings settings = null;
     
-    private GameFont font;
-    private GameFont bigFont;
+    private SystemFont font;
+    private SystemFont bigFont;
     
     private int AteParticles = 0;
     
@@ -94,8 +98,8 @@ public class GameView extends engines.views.GameView {
         game.setGameListener(new GeneratedObserver());
         
         
-        font  = fontManager.getFont(getImage("libs/font.fnt"));
-        bigFont  = fontManager.getFont(getImage("libs/font.fnt"));
+        //font  = fontManager.getFont(getImage("libs/font.fnt"));
+        //bigFont  = fontManager.getFont(getImage("libs/font.fnt"));
 
         loadAgars();
         loadBots();
@@ -112,7 +116,7 @@ public class GameView extends engines.views.GameView {
 
         
         
-        bg = new TileBackground(getImages("img/background.png", 1, 1), tiles);
+        bg = new Background(getImages("img/background.png", 1, 1), tiles);
 
         field.setBackground(bg);
         
@@ -130,12 +134,6 @@ public class GameView extends engines.views.GameView {
         field.update(l);
     }
     
-    @Override
-    public boolean keyPressed(int keyCode) {
-        System.out.println("" + keyCode);
-        return false;
-    }
-
     @Override
     public void render(Graphics2D g) {
         bg.render(g);
@@ -226,7 +224,7 @@ public class GameView extends engines.views.GameView {
         public void ParticleDied(Particle p) {
             game.removeParticle(p);
             agarParticles.removeInactiveSprites();
-            SpriteGroup sg = field.getGroup(p.getName());
+            SpriteGroup sg = (SpriteGroup) field.getGroup(p.getName());
             if(sg != null) {
                 field.removeGroup(sg);
                 enemies.remove(sg);

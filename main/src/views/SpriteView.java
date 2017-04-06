@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views.gtge;
+package views;
 
-import com.golden.gamedev.object.*;
 import events.ParticleListener;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -23,7 +22,7 @@ import models.Particle;
  *
  * @author 999
  */
-public class SpriteView extends Sprite {
+public class SpriteView extends engines.views.Sprite {
     
     
     protected Particle particle = null;

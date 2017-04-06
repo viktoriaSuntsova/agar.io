@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views.gtge;
+package views;
 
-import com.golden.gamedev.object.SpriteGroup;
 import java.awt.Color;
 import models.Particle;
 
