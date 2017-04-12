@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
+package engines.views;
 
 /**
  *
  * @author homepc
  */
-public class Sprite {
+public class GameLoader {
     
 }
