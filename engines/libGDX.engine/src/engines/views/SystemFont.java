@@ -11,4 +11,8 @@ package engines.views;
  */
 public class SystemFont {
     
+    /**
+     * Шрифт по умолчанию из GDX
+     */
+    BitmapFont m_font;
 }
