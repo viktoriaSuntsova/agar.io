@@ -6,6 +6,7 @@
 package engines.views;
 
 import com.golden.gamedev.funbox.GameSettings;
+import javax.swing.JPanel;
 
 /**
  * Начальные настройки игры

@@ -117,6 +117,7 @@ public class GameView extends engines.views.GameView {
         
         bg = new Background(getImages("img/background.png", 1, 1), tiles);
 
+        // TODO pzdc
         field.setBackground(bg);
         
         settings = new PlayerSettings();

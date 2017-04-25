@@ -63,7 +63,7 @@ public class GameSettings extends engines.views.SettingsWindow {
      * Настройки
      * @return Панель настроек
      */
-    protected JPanel initSettings() {
+    public JPanel initSettings() {
         JPanel window = super.initSettings();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
