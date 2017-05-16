@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -105,7 +108,17 @@ public class GameView extends ApplicationAdapter {
     
     
     public BufferedImage getImages(String filepath, int i, int j) {
+        String absolutePath = (new File("")).getAbsolutePath() + "/";
         BufferedImage image = null;
+        try {
+            File file = new File(absolutePath + filepath);
+            if(file.exists())
+                image = ImageIO.read(file);
+            else
+                System.err.println("File not exist");
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
         return image;
     }
     

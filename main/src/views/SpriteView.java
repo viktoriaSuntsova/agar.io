@@ -8,12 +8,10 @@ package views;
 import events.ParticleListener;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import models.GameMath;
 import models.Particle;
@@ -39,38 +37,56 @@ public class SpriteView extends engines.views.Sprite {
      *Отрисовка
      */
     protected void repaint() {
-        image = image.isEmpty() ? "/img/" + particle.getType() + ".png" : image;
-        BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(), BufferedImage.TYPE_INT_ARGB);
+        if(image.isEmpty()) {
+            image =  "/img/" + particle.getType() + ".png";
+        }
+        BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(), 
+                BufferedImage.TYPE_INT_ARGB);
         if (color != null) {
             // Зарисовать площадь нужным цветом
             g2d = bi.createGraphics();
             g2d.setColor(color);
             g2d.drawOval(0, 0, bi.getWidth(), bi.getHeight());
-            if( !particle.getType().isEmpty() ) {
-                try {
-                    //image;
-                    String absolutePath = (new File(".")).getAbsolutePath();
-                    File newImage = new File(absolutePath + image);
-                    if(!newImage.isFile()) {
-                        return;
-                    }
-                    //Взять картинку и задать ей нужный размер
-                    Image originalImage = ImageIO.read(newImage);
-                    Image scaled = originalImage.getScaledInstance(particle.getSize(), particle.getSize(), Image.SCALE_SMOOTH);
-                    //Создать  BufferedImage
-                    BufferedImage avatar = new BufferedImage(scaled.getWidth(null), scaled.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                    //Нарисовать BufferedImage на кружочке
-                    Graphics2D bGr = avatar.createGraphics();
-                    bGr.drawImage(scaled, 0, 0, null);
-                    bGr.dispose();
-                    g2d.drawImage(avatar, (particle.getSize() - avatar.getWidth()) / 2,
-                         (particle.getSize() - avatar.getHeight()) / 2, null);
-                } catch (IOException ex) {
-                    Logger.getLogger("No such file in the directory");
-                }
+            BufferedImage avatar = getImage();
+            if(avatar != null) {
+                g2d.drawImage(avatar, 0, 0, null);
             }
             this.setImage(bi);
         }
+    }
+    
+    public BufferedImage getImage() {
+        BufferedImage avatar = null;
+        BufferedImage scaled = null;
+        String absolutePath = (new File(".")).getAbsolutePath();
+        File newImage = new File(absolutePath + image);
+        try {
+            if(newImage.isFile()) {
+                //Взять картинку и задать ей нужный размер
+                avatar = ImageIO.read(newImage);
+                //Создать  BufferedImage
+                scaled = new BufferedImage(particle.getSize(), particle.getSize(), 
+                        BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g = scaled.createGraphics();
+                g.drawImage(avatar, 0, 0, particle.getSize(), particle.getSize(), null);
+                g.dispose();
+            }
+        } catch(IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return scaled;
+    }
+    
+    public void clearImage() {
+        BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(),
+                BufferedImage.TYPE_INT_ARGB);
+        
+        // Зарисовать площадь нужным цветом
+        g2d = bi.createGraphics();
+        g2d.setColor(new Color(0, 0, 0, 0));
+        g2d.fillRect((int)getX(), (int)getY(), particle.getSize(), particle.getSize());
+        
+        g2d.clearRect((int)getX(), (int)getY(), particle.getSize(), particle.getSize());
     }
     
     /**

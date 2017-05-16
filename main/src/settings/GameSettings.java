@@ -53,10 +53,11 @@ public class GameSettings extends engines.views.SettingsWindow {
                 GameSettings.CreatePlayer
         );
         game.setup(view, new Dimension(800, 600), false);
+        game.start();
         if(GameSettings.CreatePlayer) {
             view.addPlayer(GameSettings.namePlayer, GameSettings.avaPlayer);
         }
-        game.start();
+        setVisible(false);
     }
     
     /**
@@ -98,11 +99,11 @@ public class GameSettings extends engines.views.SettingsWindow {
         create.setBackground(new java.awt.Color(153, 255, 153));
         create.setText("Создать игру");
 
-        agarCount.setValue(60);
+        agarCount.setValue(30);
 
         obstacleCount.setValue(10);
 
-        botCount.setValue(15);
+        botCount.setValue(0);
         
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

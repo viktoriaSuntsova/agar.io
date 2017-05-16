@@ -34,13 +34,17 @@ public class SpriteGroup {
     }
     
     public void removeInactiveSprites() {
-        int count = sprites.size();
-        for(int i = 0; i < count; i++) {
-            if(!sprites.get(i).isActive()) {
-                sprites.remove(i);
-                i--;
+        ArrayList<Sprite> inActiveSprites = new ArrayList<>();
+        for(Sprite sprite : sprites) {
+            if(!sprite.isActive()) {
+                sprite.clearImage();
+                inActiveSprites.add(sprite);
             }
         }
+    }
+    
+    public ArrayList<Sprite> getSprites() {
+        return sprites;
     }
     
     public Sprite getActiveSprite() {

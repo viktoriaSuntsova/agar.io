@@ -38,4 +38,8 @@ public class Background extends TileBackground {
     public double getY() {
         return super.getY();
     }
+    
+    public void setTotalClip(int h, int w) {
+        
+    }
 }

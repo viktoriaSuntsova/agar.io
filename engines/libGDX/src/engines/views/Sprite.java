@@ -82,6 +82,9 @@ public class Sprite {
         );
     }
     
+    public void clearImage() {
+    }
+    
     /**
      * Устанавливает X-координату спрайта
      * @param x координата спрайта
@@ -154,7 +157,7 @@ public class Sprite {
      * @return центр спрайта
      */
     public Point getCenter() {
-        return new Point((int)0,(int) 0);
+        return new Point((int)getX(),(int) getY());
     }
     
     public void setActive(boolean isActive) {

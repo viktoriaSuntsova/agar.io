@@ -116,15 +116,18 @@ public class GameView extends engines.views.GameView {
         
         
         bg = new Background(getImages("img/background.png", 1, 1), tiles);
+        bg.setClip(0, 0, this.dimensions().width, this.dimensions().height);
+        bg.setTotalClip(WIDTH, HEIGHT);
 
         // TODO pzdc
         field.setBackground(bg);
         
         settings = new PlayerSettings();
         settings.setGameListener(new SettingsObserver());
-        if(!isCreatePlayer) {
+        addPlayer("player", "");
+        /*if(!isCreatePlayer) {
             settings.setVisible(true);
-        }
+        }*/
     }
 
     @Override
@@ -166,9 +169,9 @@ public class GameView extends engines.views.GameView {
             field.addCollisionGroup(aiGroup, agarParticles, new AgarCollision());
             field.addCollisionGroup(aiGroup, obstacleParticles, new ObstacleAICollision());
             field.addCollisionGroup(player, aiGroup, new PlayerBotCollision());
-            for(SpriteGroup enemy : enemies ) {
+            /*for(SpriteGroup enemy : enemies ) {
                 field.addCollisionGroup(enemy, aiGroup, new BotBotCollision());
-            }
+            }*/
             enemies.add(aiGroup);
             Sprites.add(ai);
         }

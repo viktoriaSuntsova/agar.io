@@ -24,6 +24,7 @@ public class Background {
         m_texture  = TextureManager.getTexture(bi);
         m_texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
     }
+    
     /**
      * Создает новый фон с заданным изображением
      * @param bi  изображение
@@ -80,22 +81,9 @@ public class Background {
      * @param s спрайт, в центр которого устанавливается позиция камеры
      */
     public void setToCenter(Sprite s) {
-        Point center = s.getCenter();
-        float x = center.x;
-        float y = center.y;
-        if ((x  - viewportWidth / 2) < 0) {
-            x = viewportWidth / 2;
-        }
-        if ((y  - viewportHeight / 2) < 0) {
-            y = viewportHeight / 2;
-        }
-        if ((x + viewportWidth / 2) > totalWidth) {
-            x = totalWidth - viewportWidth / 2;
-        }
-        if ((y + viewportHeight / 2) > totalHeight) {
-            y = totalHeight - viewportHeight / 2;
-        }
-        GameView.m_current_camera.position.set(x, y, 0);
+        double x = s.getX();
+        double y = s.getY();
+        GameView.m_current_camera.position.set((float)x, (float)y, 0);
     }
     
     /**

@@ -5,10 +5,13 @@
  */
 package engines.views;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.GdxNativesLoader;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +72,7 @@ public class TextureManager {
                 return m_entry.m_texture;
             }            
         }
+        
         Texture tex = TextureManager.imageToTexture(img);
         Entry e = new Entry();
         e.m_image = img;
