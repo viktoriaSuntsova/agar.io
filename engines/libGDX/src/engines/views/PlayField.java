@@ -75,18 +75,22 @@ public class PlayField {
     int updateIteration = 0;
     
     public void checkCollisions() {
-        if(updateIteration % 10 == 0) {
+        if(updateIteration % 1 == 0) {
             collisions.stream().forEach((collisionGroup) -> {
                 ArrayList<Sprite> sprites1 = collisionGroup.spriteGroup1.getSprites();
                 ArrayList<Sprite> sprites2 = collisionGroup.spriteGroup2.getSprites();
-                sprites1.stream().forEach((sp1) -> {
-                    sprites2.stream().forEach((sp2) -> {
-                        if(checkCollistion((int)sp1.getX(), (int)sp1.getY(), (int)sp1.getWidth(),
-                                (int)sp2.getX(), (int)sp2.getY(), (int)sp2.getWidth())) {
-                            collisionGroup.collision.collided(sp1, sp2);
+                for(int i = 0; i < sprites1.size(); i++){
+                    for(int j = 0; j < sprites2.size(); j++){
+                        Sprite sp1 = sprites1.get(i);
+                        Sprite sp2 = sprites2.get(j);
+                        if(sp1 != null && sp2 != null) {
+                            if(checkCollistion((int)sp1.getX(), (int)sp1.getY(), (int)sp1.getWidth(),
+                                    (int)sp2.getX(), (int)sp2.getY(), (int)sp2.getWidth())) {
+                                collisionGroup.collision.collided(sp1, sp2);
+                            }
                         }
-                    });
-                });
+                    };
+                };
             });
         }
         updateIteration += updateIteration > 1000 ? 1 : (updateIteration + 1);

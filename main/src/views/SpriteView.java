@@ -33,25 +33,33 @@ public class SpriteView extends engines.views.Sprite {
     
     protected String image = "";
     
+    protected boolean isDeleted = false;
+    
     /**
      *Отрисовка
      */
     protected void repaint() {
-        if(image.isEmpty()) {
-            image =  "/img/" + particle.getType() + ".png";
-        }
         BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(), 
-                BufferedImage.TYPE_INT_ARGB);
-        if (color != null) {
-            // Зарисовать площадь нужным цветом
-            g2d = bi.createGraphics();
-            g2d.setColor(color);
-            g2d.drawOval(0, 0, bi.getWidth(), bi.getHeight());
-            BufferedImage avatar = getImage();
-            if(avatar != null) {
-                g2d.drawImage(avatar, 0, 0, null);
-            }
+                    BufferedImage.TYPE_INT_ARGB);
+        g2d = bi.createGraphics();
+        if(isDeleted) {
+            g2d.clearRect(0, 0, particle.getSize(), particle.getSize());
             this.setImage(bi);
+        }
+        else {
+            if(image.isEmpty()) {
+                image =  "/img/" + particle.getType() + ".png";
+            }
+            if (color != null) {
+                // Зарисовать площадь нужным цветом
+                g2d.setColor(color);
+                g2d.drawOval(0, 0, bi.getWidth(), bi.getHeight());
+                BufferedImage avatar = getImage();
+                if(avatar != null) {
+                    g2d.drawImage(avatar, 0, 0, null);
+                }
+                this.setImage(bi);
+            }
         }
     }
     
@@ -78,15 +86,8 @@ public class SpriteView extends engines.views.Sprite {
     }
     
     public void clearImage() {
-        BufferedImage bi = new BufferedImage(particle.getSize(), particle.getSize(),
-                BufferedImage.TYPE_INT_ARGB);
-        
-        // Зарисовать площадь нужным цветом
-        g2d = bi.createGraphics();
-        g2d.setColor(new Color(0, 0, 0, 0));
-        g2d.fillRect((int)getX(), (int)getY(), particle.getSize(), particle.getSize());
-        
-        g2d.clearRect((int)getX(), (int)getY(), particle.getSize(), particle.getSize());
+        isDeleted = true;
+        repaint();
     }
     
     /**
