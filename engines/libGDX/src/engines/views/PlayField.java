@@ -39,7 +39,11 @@ public class PlayField {
     }
     
     public void removeGroup(SpriteGroup group) {
-        spritegroups.remove(group);
+        for(Sprite sprite : group.getSprites()) {
+            sprite.clearImage();
+        }
+        group.sprites.clear();
+        collisions.removeIf(gr -> gr.spriteGroup1 == group || gr.spriteGroup2 == group);
     }
     
     public SpriteGroup getGroup(String name) {
@@ -76,7 +80,8 @@ public class PlayField {
     
     public void checkCollisions() {
         if(updateIteration % 1 == 0) {
-            collisions.stream().forEach((collisionGroup) -> {
+            for(int col = 0; col < collisions.size(); col++) {
+                CollisionGroups collisionGroup = collisions.get(col);
                 ArrayList<Sprite> sprites1 = collisionGroup.spriteGroup1.getSprites();
                 ArrayList<Sprite> sprites2 = collisionGroup.spriteGroup2.getSprites();
                 for(int i = 0; i < sprites1.size(); i++){
@@ -91,7 +96,7 @@ public class PlayField {
                         }
                     };
                 };
-            });
+            };
         }
         updateIteration += updateIteration > 1000 ? 1 : (updateIteration + 1);
     }

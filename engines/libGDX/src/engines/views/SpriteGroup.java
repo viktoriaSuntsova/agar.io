@@ -44,7 +44,6 @@ public class SpriteGroup {
         for (Sprite inActiveSprite : inActiveSprites) {
             sprites.remove(inActiveSprite);
         }
-        //System.out.println("removeInactiveSprites:group = " + name + "count = " + sprites.size());
     }
     
     public ArrayList<Sprite> getSprites() {

@@ -216,6 +216,7 @@ public class GameView extends engines.views.GameView {
             game.removeParticle(p);
             agarParticles.removeInactiveSprites();
             SpriteGroup sg = (SpriteGroup) field.getGroup(p.getName());
+            System.out.println("group name = " + p.getName());
             if(sg != null) {
                 field.removeGroup(sg);
                 enemies.remove(sg);

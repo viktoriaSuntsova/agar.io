@@ -58,6 +58,7 @@ public class SpriteView extends engines.views.Sprite {
                 if(avatar != null) {
                     g2d.drawImage(avatar, 0, 0, null);
                 }
+                System.out.println("name: " + particle.getName());
                 this.setImage(bi);
             }
         }
@@ -86,6 +87,7 @@ public class SpriteView extends engines.views.Sprite {
     }
     
     public void clearImage() {
+        System.out.println("(clearImage) name: " + particle.getName());
         isDeleted = true;
         repaint();
     }
