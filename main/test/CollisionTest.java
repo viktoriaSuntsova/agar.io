@@ -85,11 +85,4 @@ public class CollisionTest {
         assertFalse(pf_test.checkCollistion(1,1,1,1,1,5));
     }
     
-    //На с одим центом и разными радиусами
-    @Test
-    public void TestCollised() 
-    {
-        PlayField pf_test = new PlayField();
-        assertFalse(pf_test.checkCollistion(1,1,1,20,20,1));
-    }
 }
