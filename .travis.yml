@@ -3,3 +3,5 @@ language: java
 branches:
   only:
   - bridge
+  
+ script: ant build
