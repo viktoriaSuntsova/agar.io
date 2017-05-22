@@ -82,7 +82,7 @@ public class CollisionTest {
     public void TestEqualCenter() 
     {
         PlayField pf_test = new PlayField();
-        assertFalse(pf_test.checkCollistion(1,1,1,1,1,5));
+        assertFalse(pf_test.checkCollistion(1,1,1,1,1,8));
     }
     
 }
