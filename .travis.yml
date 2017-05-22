@@ -1,6 +1,10 @@
 language: java
-
+jdk:
+	-oraclejdk8
 branches:
   only:
-  - bridge
+	- bridge
+script:
+	-ant jar
+	-ant test
   
