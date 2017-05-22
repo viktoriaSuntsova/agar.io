@@ -1,11 +1,14 @@
 language: java
+
 jdk:
-	-oraclejdk8
+-oraclejdk8
+
 branches:
-  only:
-	- bridge
+only:
+- bridge
+	
 script:
-	- cd agar.io
-	- ant jar
-	- ant test
+- cd agar.io
+- ant jar
+- ant test
   
