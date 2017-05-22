@@ -5,6 +5,7 @@ branches:
   only:
 	- bridge
 script:
-	-ant jar
-	-ant test
+	- cd agar.io
+	- ant jar
+	- ant test
   
