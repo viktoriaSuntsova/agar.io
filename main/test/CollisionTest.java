@@ -57,7 +57,7 @@ public class CollisionTest {
     public void TestEqualY() 
     {
         PlayField pf_test = new PlayField();
-        assertFalse(pf_test.checkCollistion(3,1,2,4,1,2));
+        assertFalse(pf_test.checkCollistion(3,1,2,5,1,2));
     }
     
     //public boolean checkCollistion(int x1, int y1, int size1, int x2, int y2, int size2) 
