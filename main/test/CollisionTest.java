@@ -49,7 +49,7 @@ public class CollisionTest {
     public void TestEqual() 
     {
         PlayField pf_test = new PlayField();
-        assertFalse(pf_test.checkCollistion(2,2,2,2,2,2));
+        assertFalse(pf_test.checkCollistion(1,1,1,1,1,1));
     }
     
     //На одной оси Y
